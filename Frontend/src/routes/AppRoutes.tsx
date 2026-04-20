@@ -17,8 +17,8 @@ function AppRoutes() {
 <Suspense fallback={<p>Loading.....</p>}>
   <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/Login" element={<LoginPage/>}/>
-      <Route path="/Register" element={<Register/>}/>
+      <Route path="/login" element={<LoginPage/>}/>
+      <Route path="/register" element={<Register/>}/>
       <Route path="/verify-notice" element={<VerifyNotice />} />
       <Route path="/verify-email" element={<VerifyEmail />} />
       <Route path="/admin" element={<AdminRoute />}>

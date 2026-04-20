@@ -27,11 +27,11 @@ function Main() {
 useEffect(() => {
   const fetchFood = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/food", {
+      const res = await axios.get(import.meta.env.VITE_API_URL +"/api/food", {
         withCredentials: true,
       });
 
-      const res1= await axios.get("http://localhost:5000/api/food/discount", {
+      const res1= await axios.get(import.meta.env.VITE_API_URL +"/api/food/discount", {
         withCredentials: true,
       });
       

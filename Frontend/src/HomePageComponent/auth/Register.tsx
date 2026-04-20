@@ -161,11 +161,14 @@ const RegisterPage = () => {
   } = useForm<RegisterForm>({
     resolver: yupResolver(schema),
   });
+  console.log(import.meta.env.VITE_API_URL);
 
   const onSubmit = async (data: RegisterForm) => {
-    await axios.post("http://localhost:5000/api/auth/user/register", data, {
+    await axios.post(import.meta.env.VITE_API_URL +"/api/auth/user/register", data, {
       withCredentials: true,
     });
+
+    console.log(import.meta.env.VITE_API_URL);
 
     localStorage.setItem("email", data.email);
     navigate("/verify-notice");

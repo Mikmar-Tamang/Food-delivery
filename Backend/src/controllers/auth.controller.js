@@ -89,7 +89,7 @@ const userRegister = async (req, res) => {
       isVerified: false,
     });
 
-    const verifyLink = `http://localhost:5000/api/auth/user/verify-email?token=${verificationToken}`;
+    const verifyLink = `${process.env.BASR_URL}/api/auth/user/verify-email?token=${verificationToken}`;
 
     await sendEmail(
       email,
@@ -130,14 +130,14 @@ const userVerifyEmail = async (req, res) => {
 
     await user.save();
 
-    const jwtToken= jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: '1h'});
+    const jwtToken= jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: '1d'});
 
     res.cookie("token", jwtToken, {
       httpOnly: true,
       secure: false
     })
 
-    return res.redirect("http://localhost:5173/admin");
+    return res.redirect(`${process.env.FRONTENT_URL}/admin`);
 
   } catch (err) {
     return res.status(500).json({ error: err.message });
@@ -166,7 +166,7 @@ const userResendVerification = async (req, res) => {
 
     await user.save();
 
-    const link = `http://localhost:3000/verify-email?token=${newToken}`;
+    const link = `${process.env.BASR_URL}/verify-email?token=${newToken}`;
 
     console.log("Resend Link:", link);
 

@@ -17,7 +17,7 @@ const VerifyEmail: React.FC = () => {
         }
 
         await axios.get(
-          `http://localhost:5000/api/auth/user/verify-email?token=${token}`
+          import.meta.env.VITE_API_URL +`/api/auth/user/verify-email?token=${token}`
         );
 
         navigate("/admin");
