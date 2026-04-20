@@ -15,7 +15,7 @@
   const checkAuth = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/auth/user/me",
+        import.meta.env.VITE_API_URL+"/api/auth/user/me",
         { withCredentials: true }
       );
 
@@ -38,7 +38,7 @@
  const handleLogout = async () => {
   try {
     await axios.post(
-      import.meta.env.VITE_API_URL +"/api/auth/user/logout",
+      import.meta.env.VITE_API_URL+"/api/auth/user/logout",
       {},
       { withCredentials: true }
     );
