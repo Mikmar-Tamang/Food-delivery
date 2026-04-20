@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router";
 import { lazy, Suspense } from "react";
-import AdminRoute from "./AdminRoute";
+import AdminRoute from "../routes/AdminRoute";
 import Dashboard from "../pages/admin/Dashboard";
 
 const HomePage = lazy(() => import('../pages/HomePage'))
