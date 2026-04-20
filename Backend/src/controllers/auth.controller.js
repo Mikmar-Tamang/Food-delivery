@@ -89,7 +89,7 @@ const userRegister = async (req, res) => {
       isVerified: false,
     });
 
-    const verifyLink = `${process.env.BASR_URL}/api/auth/user/verify-email?token=${verificationToken}`;
+    const verifyLink = `${process.env.BASE_URL}/api/auth/user/verify-email?token=${verificationToken}`;
 
     await sendEmail(
       email,
@@ -132,12 +132,13 @@ const userVerifyEmail = async (req, res) => {
 
     const jwtToken= jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: '1d'});
 
-    res.cookie("token", jwtToken, {
-      httpOnly: true,
-      secure: false
-    })
+   res.cookie("token", jwtToken, {
+  httpOnly: true,
+  secure: true,
+  sameSite: "none"
+});
 
-    return res.redirect(`${process.env.FRONTENT_URL}/admin`);
+    return res.redirect(`${process.env.FRONTEND_URL}/admin`);
 
   } catch (err) {
     return res.status(500).json({ error: err.message });
@@ -166,7 +167,7 @@ const userResendVerification = async (req, res) => {
 
     await user.save();
 
-    const link = `${process.env.BASR_URL}/verify-email?token=${newToken}`;
+    const link = `${process.env.BASE_URL}/api/auth/user/verify-email?token=${newToken}`;
 
     console.log("Resend Link:", link);
 
@@ -208,9 +209,10 @@ const userLogin = async (req, res) => {
     );
 
     res.cookie("token", token, {
-      httpOnly: true,
-      secure: false
-    });
+  httpOnly: true,
+  secure: true,
+  sameSite: "none"
+});
 
     res.json({ message: "Login successful" });
 
@@ -260,7 +262,11 @@ const foodPartnerRegister = async (req, res) => {
 
     const token = jwt.sign({id: newFoodPartner._id}, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-    res.cookie("token", token);
+    res.cookie("token", token, {
+  httpOnly: true,
+  secure: true,
+  sameSite: "none"
+});
 
     res.status(201).json({
         message: "Food partner registered successfully",
@@ -289,7 +295,11 @@ const foodPartnerLogin = async (req, res) => {
 
         const token= jwt.sign({id: isFoodPartnerExists._id}, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-        res.cookie("token", token);
+       res.cookie("token", token, {
+  httpOnly: true,
+  secure: true,
+  sameSite: "none"
+});
 
         res.status(200).json({
             message: "Login successful",
