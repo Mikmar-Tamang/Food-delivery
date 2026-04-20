@@ -7,64 +7,6 @@ import {v4 as uuid} from 'uuid'
 import crypto from 'crypto'
 import sendEmail from "../services/email.service.js";
 
-// const userRegister= async (req, res) => {
-//     try{
-//     const { username, email, password } = req.body;
-
-//     const isUserExist = await user.findOne({ email });
-//     if (isUserExist) {
-//         return res.status(400).json({ message: "User already exists" });
-//     }
-
-//     const hash = await bcrypt.hash(password, 10);
-
-//     const newUser = await user.create({
-//         username,
-//         email,
-//         password: hash
-//     });
-
-//     const token = jwt.sign({id: newUser._id}, process.env.JWT_SECRET, { expiresIn: '1h' });
-//     res.cookie("token", token);
-
-//     res.status(201).json({
-//         message: "User registered successfully",
-//         newUser: {
-//             _id: newUser._id,
-//             username: newUser.username,
-//             email: newUser.email
-//         }
-//     });} catch (err) {
-//         res.status(500).json({ error: err.message });
-//     };
-// };
-
-// const userLogin = async (req, res) => {
-//     try {
-//         const {email, password}= req.body;
-//         const isUserExists= await user.findOne({email});
-//         if(!isUserExists) return res.status(400).json({message: "email and password is incorrect"});
-
-//         const isPasswordCorrect= await bcrypt.compare(password, isUserExists.password);
-//         if(!isPasswordCorrect) return res.status(400).json({message: "email and password is incorrect"});
-
-//         const token= jwt.sign({id: isUserExists._id}, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-//         res.cookie("token", token);
-
-//         res.status(200).json({
-//             message: "Login successful",
-//             user: {
-//                 _id: isUserExists._id,
-//                 username: isUserExists.username,
-//                 email: isUserExists.email
-//             }
-//         });
-
-//     } catch (err) {
-//         res.status(500).json({ error: err.message });
-//     }
-// };
 
 const userRegister = async (req, res) => {
    try {
