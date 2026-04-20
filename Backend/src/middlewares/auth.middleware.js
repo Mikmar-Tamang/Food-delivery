@@ -17,6 +17,9 @@ const getTokenData = (req) => {
 };
 
 const foodPartnerId = async (req, res, next) => {
+  if (req.method === 'OPTIONS') {
+    return next();
+  }
   const decoded = getTokenData(req);
 
   if (!decoded) {
@@ -34,6 +37,10 @@ const foodPartnerId = async (req, res, next) => {
 };
 
 const userId = async (req, res, next) => {
+  if (req.method === 'OPTIONS') {
+    return next();
+  }
+  
   const decoded = getTokenData(req);
 
   if (!decoded) {
