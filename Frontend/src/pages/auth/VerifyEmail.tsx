@@ -20,7 +20,7 @@ const VerifyEmail: React.FC = () => {
           `${import.meta.env.VITE_API_URL}/api/auth/user/verify-email?token=${token}`
         );
 
-        navigate("/admin");
+        navigate("/");
       } catch (error) {
         console.log("Verification failed", error);
       }
