@@ -8,17 +8,25 @@ import authRoutes from './routes/auth.routes.js';
 import foodRoutes from './routes/food.routes.js';
 
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(cookieParser());
-
 app.use(cors({
   origin:[
     process.env.FRONTEND_URL,
     "http://localhost:5173"
   ],
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+app.options('*', (req, res) => {
+  res.sendStatus(200);
+});
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cookieParser());
+
+
 
 app.get('/', (req, res) => {
     res.send("Hello World");
