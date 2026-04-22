@@ -32,7 +32,7 @@ const email = req.body.email.trim().toLowerCase();
 
       await existingUser.save();
 
-      const verifyLink = `${process.env.BASE_URL}/api/auth/user/verify-email?token=${verificationToken}`;
+      const verifyLink = `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}`;
 
       await sendEmail(
         email,
@@ -111,7 +111,7 @@ const userVerifyEmail = async (req, res) => {
   sameSite: "none"
 });
 
-    return res.redirect(`${process.env.FRONTEND_URL}/admin`);
+    return res.redirect(`${process.env.FRONTEND_URL}`);
 
   } catch (err) {
     return res.status(500).json({ error: err.message });
