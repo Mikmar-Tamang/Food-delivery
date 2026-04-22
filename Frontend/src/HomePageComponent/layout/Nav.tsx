@@ -65,12 +65,20 @@
         <p>Current Location <b>Swoyambhu, Kathmandu</b></p>
         </div>
 
-        
+
         {/* search bar */}
         <div className="flex justify-center items-center ml-20 gap-2">
           <div>
           <input type="text" className="text-black rounded-md w-36 px-3 h-7.5 font-bold" placeholder="Search Food" />
           </div>
+
+           <button
+        onClick={() => navigation("/admin")}
+        className="bg-white text-black px-4 py-1 rounded"
+      >
+        Dashboard
+      </button>
+
           {loading ? (
 
           <div className="w-22.5 h-7.5 bg-gray-200 animate-pulse rounded-md">Loading</div>
