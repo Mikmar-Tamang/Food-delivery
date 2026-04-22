@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import AdminRoute from "../routes/AdminRoute";
 import Dashboard from "../pages/admin/Dashboard";
