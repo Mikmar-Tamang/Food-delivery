@@ -9,17 +9,46 @@ import sendEmail from "../services/email.service.js";
 
 
 const userRegister = async (req, res) => {
-   try {
-    const { username, email, password } = req.body;
+  try {
+    const { username, password } = req.body;
+const email = req.body.email.trim().toLowerCase();
 
     const existingUser = await User.findOne({ email });
 
+    // 🧩 CASE 1: User already exists
     if (existingUser) {
-      return res.status(400).json({ message: "User already exists" });
+      // ✔ If verified → block
+      if (existingUser.isVerified) {
+        return res.status(400).json({ message: "User already exists" });
+      }
+
+      // 🔁 If NOT verified → update & resend
+      const verificationToken = crypto.randomBytes(32).toString("hex");
+
+      existingUser.username = username;
+      existingUser.password = await bcrypt.hash(password, 10);
+      existingUser.verificationToken = verificationToken;
+      existingUser.verificationExpires = Date.now() + 1000 * 60 * 60;
+
+      await existingUser.save();
+
+      const verifyLink = `${process.env.BASE_URL}/api/auth/user/verify-email?token=${verificationToken}`;
+
+      await sendEmail(
+        email,
+        "Verify your account",
+        `<h2>Welcome ${username}</h2>
+         <p>Click below to verify your email:</p>
+         <a href="${verifyLink}">Verify Email</a>`
+      );
+
+      return res.status(200).json({
+        message: "Verification email resent",
+      });
     }
 
+    // 🧩 CASE 2: NEW USER → CREATE HERE
     const hash = await bcrypt.hash(password, 10);
-
     const verificationToken = crypto.randomBytes(32).toString("hex");
 
     await User.create({
@@ -36,11 +65,9 @@ const userRegister = async (req, res) => {
     await sendEmail(
       email,
       "Verify your account",
-      `
-        <h2>Welcome ${username}</h2>
-        <p>Click below to verify your email:</p>
-        <a href="${verifyLink}">Verify Email</a>
-      `
+      `<h2>Welcome ${username}</h2>
+       <p>Click below to verify your email:</p>
+       <a href="${verifyLink}">Verify Email</a>`
     );
 
     return res.status(201).json({
@@ -48,8 +75,11 @@ const userRegister = async (req, res) => {
     });
 
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+  if (err.code === 11000) {
+    return res.status(400).json({ message: "User already exists" });
   }
+  return res.status(500).json({ error: err.message });
+}
 };
 
 // VERIFY EMAIL + AUTO LOGIN
