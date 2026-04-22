@@ -1,37 +1,86 @@
+import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
+  const [open, setOpen] = useState(true);
   const navigate = useNavigate();
 
+  // 🔥 Logout API
   const logout = async () => {
-    await axios.post(import.meta.env.VITE_API_URL +"/api/auth/logout", {}, {
-      withCredentials: true,
-    });
+    try {
+      await axios.post(
+        import.meta.env.VITE_API_URL + "/api/auth/user/logout",
+        {},
+        { withCredentials: true }
+      );
 
-    navigate("/login");
+      navigate("/login");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
     <div className="flex min-h-screen">
 
-      <aside className="w-64 bg-gray-900 text-white p-5">
-        <h2 className="text-xl font-bold mb-4">Dashboard</h2>
+      {/* 🔥 Sidebar */}
+      <aside
+        className={`bg-gray-900 text-white p-5 transition-all duration-300 
+        ${open ? "w-64" : "w-16"}`}
+      >
 
-        <ul className="space-y-2">
-          <li>👤 Profile</li>
-          <li>🛒 Orders</li>
-          <li>🧺 Basket</li>
+        {/* Toggle button */}
+        <button
+          onClick={() => setOpen(!open)}
+          className="text-white mb-6"
+        >
+          ☰
+        </button>
+
+        {/* Menu */}
+        <ul className="space-y-4">
+
+          <li>
+            <NavLink
+              to="/admin/profile"
+              className="hover:text-gray-300"
+            >
+              👤 {open && "Profile"}
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to="/admin/orders"
+              className="hover:text-gray-300"
+            >
+              🛒 {open && "Orders"}
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to="/admin/basket"
+              className="hover:text-gray-300"
+            >
+              🧺 {open && "Basket"}
+            </NavLink>
+          </li>
+
         </ul>
 
+        {/* Logout */}
         <button
           onClick={logout}
-          className="mt-6 bg-red-600 w-full py-2 rounded-lg"
+          className="mt-8 bg-red-600 w-full py-2 rounded-lg hover:bg-red-700"
         >
-          Logout
+          {open && "Logout"}
         </button>
+
       </aside>
 
+      {/* Main Content */}
       <main className="flex-1 p-6 bg-gray-100">
         <h1 className="text-2xl font-bold">
           Welcome 👋

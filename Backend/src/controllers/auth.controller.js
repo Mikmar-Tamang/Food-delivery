@@ -60,7 +60,7 @@ const email = req.body.email.trim().toLowerCase();
       isVerified: false,
     });
 
-    const verifyLink = `${process.env.FRONTEND_URL}/api/auth/user/verify-email?token=${verificationToken}`;
+    const verifyLink = `${process.env.BASE_URL}/api/auth/user/verify-email?token=${verificationToken}`;
 
     await sendEmail(
       email,
@@ -196,7 +196,11 @@ const userLogin = async (req, res) => {
 
 const userLogout = async (req, res) => {
     try {
-        res.clearCookie("token");
+        res.clearCookie("token", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+  });
         res.status(200).json({ message: "Logout successful" });
     } catch (err) {
         res.status(500).json({ error: err.message });

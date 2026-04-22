@@ -64,6 +64,8 @@
         <img src={locationLogo} className="w-3.75 h-4.5" alt=""/>
         <p>Current Location <b>Swoyambhu, Kathmandu</b></p>
         </div>
+
+        
         {/* search bar */}
         <div className="flex justify-center items-center ml-20 gap-2">
           <div>
