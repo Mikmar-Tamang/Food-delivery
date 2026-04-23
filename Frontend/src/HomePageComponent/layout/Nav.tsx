@@ -1,7 +1,7 @@
   import logo from "../../assets/photo/Logo.png"
   import user from '../../assets/photo/user.png'
   import locationLogo from "../../assets/photo/map-marker-alt.png"
-  import { useNavigate } from "react-router-dom"
+  import { useNavigate, useLocation } from "react-router-dom"
   import { useEffect, useState } from "react";
   import axios from "axios";
 
@@ -10,6 +10,8 @@
     
     const [loggedIn, setLoggedIn] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true);
+
+    const location = useLocation();
 
  useEffect(() => {
   const checkAuth = async () => {
@@ -33,22 +35,10 @@
   };
 
   checkAuth();
-}, []);
+}, [location]);
 
  const handleDashboard = async () => {
-  try {
-    await axios.post(
-      import.meta.env.VITE_API_URL+"/api/auth/user/logout",
-      {},
-      { withCredentials: true }
-    );
-
-    setLoggedIn(false);
-    setLoading(false); // optional safety
     navigation("/admin");
-  } catch (err) {
-    console.log(err);
-  }
 };
 
     const navigation= useNavigate();
