@@ -35,7 +35,7 @@
   checkAuth();
 }, []);
 
- const handleLogout = async () => {
+ const handleDashboard = async () => {
   try {
     await axios.post(
       import.meta.env.VITE_API_URL+"/api/auth/user/logout",
@@ -45,7 +45,7 @@
 
     setLoggedIn(false);
     setLoading(false); // optional safety
-    navigation("/");
+    navigation("/admin");
   } catch (err) {
     console.log(err);
   }
@@ -72,25 +72,15 @@
           <input type="text" className="text-black rounded-md w-36 px-3 h-7.5 font-bold" placeholder="Search Food" />
           </div>
 
-           <button
-        onClick={() => navigation("/admin")}
+          {loading ? (
+          <div className="w-22.5 h-7.5 bg-gray-200 animate-pulse rounded-md">Loading</div>
+        ):loggedIn ? (
+            <button
+        onClick={handleDashboard}
         className="bg-white text-black px-4 py-1 rounded"
       >
         Dashboard
       </button>
-
-          {loading ? (
-
-          <div className="w-22.5 h-7.5 bg-gray-200 animate-pulse rounded-md">Loading</div>
-        ):loggedIn ? (
-            <div className="flex items-center justify-center rounded-md shadow-lg shadow-yellow-500 w-22.5 h-7.5">
-    <button
-    className="text-red-500 font-bold"
-    onClick={handleLogout}
-  >
-    Logout
-  </button>
-  </div>
   ) : (
     <div className="flex gap-3">
     <div className="flex items-center justify-center rounded-md shadow-lg shadow-yellow-500 w-22.5 h-7.5  gap-2">
