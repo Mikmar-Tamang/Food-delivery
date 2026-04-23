@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import HomePage from "../HomePage";
 
 const Dashboard = () => {
   const [open, setOpen] = useState(true);
@@ -65,12 +66,13 @@ const Dashboard = () => {
 
         {/* HOME */}
         {active === "home" && (
-          <div>
-            <h1 className="text-2xl font-bold">Welcome 👋</h1>
-            <p className="mt-2 text-gray-600">
-              This is your dashboard overview.
-            </p>
-          </div>
+          // <div>
+          //   <h1 className="text-2xl font-bold">Welcome 👋</h1>
+          //   <p className="mt-2 text-gray-600">
+          //     This is your dashboard overview.
+          //   </p>
+          // </div>
+          <HomePage />
         )}
 
         {/* PROFILE */}
