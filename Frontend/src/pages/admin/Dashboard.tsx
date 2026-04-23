@@ -26,7 +26,7 @@ const Dashboard = () => {
       {/* Sidebar */}
       <aside
         className={`bg-gray-900 text-white p-5 transition-all duration-300 
-        ${open ? "w-64" : "w-16"} h-screen fixed left-0 top-0`}
+        ${open ? "w-64" : "w-16"}`}
       >
         <button onClick={() => setOpen(!open)} className="mb-6">
           ☰
