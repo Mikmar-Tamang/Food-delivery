@@ -1,11 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import HomePage from "../HomePage";
 
 const Dashboard = () => {
   const [open, setOpen] = useState(true);
-  const [active, setActive] = useState("home");
+  const [active, setActive] = useState("profile");
   const navigate = useNavigate();
 
   const logout = async () => {
@@ -27,7 +26,7 @@ const Dashboard = () => {
       {/* Sidebar */}
       <aside
         className={`bg-gray-900 text-white p-5 transition-all duration-300 
-        ${open ? "w-64" : "w-16"}`}
+        ${open ? "w-64" : "w-16"} h-screen fixed left-0 top-0`}
       >
         <button onClick={() => setOpen(!open)} className="mb-6">
           ☰
@@ -35,8 +34,8 @@ const Dashboard = () => {
 
         <ul className="space-y-4">
 
-          <li onClick={() => setActive("home")} className="cursor-pointer">
-            🏠 {open && "Home"}
+          <li onClick={() => navigate("/")} className="cursor-pointer">
+            🏠Home
           </li>
 
           <li onClick={() => setActive("profile")} className="cursor-pointer">
@@ -63,17 +62,6 @@ const Dashboard = () => {
 
       {/* Content Area */}
       <main className="flex-1 p-6 bg-gray-100">
-
-        {/* HOME */}
-        {active === "home" && (
-          // <div>
-          //   <h1 className="text-2xl font-bold">Welcome 👋</h1>
-          //   <p className="mt-2 text-gray-600">
-          //     This is your dashboard overview.
-          //   </p>
-          // </div>
-          <HomePage />
-        )}
 
         {/* PROFILE */}
         {active === "profile" && (
