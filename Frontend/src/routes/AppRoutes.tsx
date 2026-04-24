@@ -1,13 +1,13 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
-import AdminRoute from "../routes/AdminRoute";
-import Dashboard from "../pages/admin/Dashboard";
 
 const HomePage = lazy(() => import('../pages/HomePage'))
 const LoginPage= lazy(() => import('../HomePageComponent/auth/LoginPage'))
 const Register= lazy(() => import('../HomePageComponent/auth/Register'))
 const VerifyNotice= lazy(() => import('../pages/auth/VerifyNotice'))
 const VerifyEmail= lazy(() => import('../pages/auth/VerifyEmail'))
+const AdminRoute= lazy(() => import('../routes/AdminRoute'))
+const Dashboard = lazy(() => import('../pages/admin/Dashboard'))
 
 function AppRoutes() {
   return (
