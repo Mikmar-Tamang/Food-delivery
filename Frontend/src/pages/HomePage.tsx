@@ -11,7 +11,7 @@ function HomePage() {
       {/* <Header /> */}
 
       {/* main content */}
-      <main className="flex-1 py-4 md:py-6">
+      <main className="flex-1">
         <Main />
       </main>
 

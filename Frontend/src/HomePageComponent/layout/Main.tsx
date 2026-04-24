@@ -294,7 +294,7 @@ function Main() {
   }, []);
 
   return (
-    <main className="flex flex-col">
+    <main className="flex flex-col gap-10">
 
       {/* ================= PART 1 FLASH DEALS ================= */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-4 md:px-6 lg:px-10">
