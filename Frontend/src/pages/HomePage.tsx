@@ -11,7 +11,7 @@ function HomePage() {
       {/* <Header /> */}
 
       {/* main content */}
-      <main className="flex-1 px-4 md:px-6 lg:px-10 py-4 md:py-6">
+      <main className="flex-1 py-4 md:py-6">
         <Main />
       </main>
 
