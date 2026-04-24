@@ -10,8 +10,7 @@ import foodRoutes from './routes/food.routes.js';
 
 app.use(cors({
   origin:[
-    process.env.FRONTEND_URL,
-    "http://localhost:5173"
+    process.env.FRONTEND_URL
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 

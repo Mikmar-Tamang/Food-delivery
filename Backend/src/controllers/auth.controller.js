@@ -15,14 +15,14 @@ const email = req.body.email.trim().toLowerCase();
 
     const existingUser = await User.findOne({ email });
 
-    // 🧩 CASE 1: User already exists
+    // CASE 1: User already exists
     if (existingUser) {
-      // ✔ If verified → block
+      // If verified → block
       if (existingUser.isVerified) {
         return res.status(400).json({ message: "User already exists" });
       }
 
-      // 🔁 If NOT verified → update & resend
+      // If NOT verified → update & resend
       const verificationToken = crypto.randomBytes(32).toString("hex");
 
       existingUser.username = username;
@@ -47,7 +47,7 @@ const email = req.body.email.trim().toLowerCase();
       });
     }
 
-    // 🧩 CASE 2: NEW USER → CREATE HERE
+    // CASE 2: NEW USER → CREATE HERE
     const hash = await bcrypt.hash(password, 10);
     const verificationToken = crypto.randomBytes(32).toString("hex");
 
@@ -107,7 +107,7 @@ const userVerifyEmail = async (req, res) => {
 
    res.cookie("token", jwtToken, {
   httpOnly: true,
-  secure: true,
+  secure: true, 
   sameSite: "none"
 });
 
@@ -140,9 +140,15 @@ const userResendVerification = async (req, res) => {
 
     await user.save();
 
-    const link = `${process.env.BASE_URL}/api/auth/user/verify-email?token=${newToken}`;
+    const link = `${process.env.FRONTEND_URL}/verify-email?token=${newToken}`;
 
-    console.log("Resend Link:", link);
+    await sendEmail(
+      email,
+      "Resend Verification",
+      `<h2>Resend Verification</h2>
+       <p>Click below to verify your email:</p>
+       <a href="${link}">Verify Email</a>`
+    );
 
     res.json({ message: "Verification email resent" });
 

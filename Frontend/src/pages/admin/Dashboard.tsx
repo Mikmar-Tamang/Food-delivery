@@ -35,19 +35,19 @@ const Dashboard = () => {
         <ul className="space-y-4">
 
           <li onClick={() => navigate("/")} className="cursor-pointer">
-            🏠Home
+            Home
           </li>
 
           <li onClick={() => setActive("profile")} className="cursor-pointer">
-            👤 {open && "Profile"}
+            {open && "Profile"}
           </li>
 
           <li onClick={() => setActive("orders")} className="cursor-pointer">
-            🛒 {open && "Orders"}
+            {open && "Orders"}
           </li>
 
           <li onClick={() => setActive("basket")} className="cursor-pointer">
-            🧺 {open && "Basket"}
+            {open && "Basket"}
           </li>
 
         </ul>
