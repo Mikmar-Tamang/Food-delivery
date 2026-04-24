@@ -294,7 +294,7 @@ function Main() {
   }, []);
 
   return (
-    <main className="flex flex-col gap-10">
+    <main className="flex flex-col">
 
       {/* ================= PART 1 FLASH DEALS ================= */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-4 md:px-6 lg:px-10">
@@ -436,7 +436,7 @@ function Main() {
       </div>
 
       {/* ================= PART 5 SEARCH FOOD ================= */}
-      <div className="bg-[#FEFAF1] px-4 md:px-6 lg:px-10">
+      <div className="bg-[#FEFAF1] px-4 md:px-6 lg:px-10 py-10">
 
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 font-bold">
           <h1 className="text-xl md:text-2xl">Search By Food</h1>
