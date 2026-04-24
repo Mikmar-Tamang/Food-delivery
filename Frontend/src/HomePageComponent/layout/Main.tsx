@@ -436,7 +436,7 @@ function Main() {
       </div>
 
       {/* ================= PART 5 SEARCH FOOD ================= */}
-      <div className="bg-[#FEFAF1] px-4 md:px-6 lg:px-10 py-10">
+      <div className="bg-[#FEFAF1] md:px-6 lg:px-10 py-10">
 
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 font-bold">
           <h1 className="text-xl md:text-2xl">Search By Food</h1>
