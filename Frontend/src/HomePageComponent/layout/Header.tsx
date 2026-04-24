@@ -53,7 +53,7 @@ function Header() {
         </p>
 
         {/* SEARCH BOX */}
-        <div className="bg-white p-4 md:p-5 rounded-md w-full md:w-[500px] lg:w-[760px] mt-6">
+        <div className="bg-white p-4 md:p-5 rounded-md w-full md:w-125 lg:w-190 mt-6">
           
           <div className="flex gap-2">
             <button>
