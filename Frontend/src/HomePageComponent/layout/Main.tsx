@@ -305,7 +305,7 @@ function Main() {
       </div>
 
       {/* ================= PART 2 HOW IT WORKS ================= */}
-      <div className="flex flex-col items-center gap-6 px-4 md:px-6 lg:px-10 py-8 md:py-12 bg-gradient-to-t from-[#FDEDCA] to-[#fcefd3]">
+      <div className="flex flex-col items-center gap-6 px-4 md:px-6 lg:px-10 py-8 md:py-12 bg-linear-to-t from-[#FDEDCA] to-[#fcefd3]">
         <h1 className="text-[#F17228] text-2xl md:text-4xl lg:text-5xl font-bold text-center">
           How does it work
         </h1>
