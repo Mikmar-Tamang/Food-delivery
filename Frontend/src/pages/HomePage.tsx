@@ -11,7 +11,7 @@ function HomePage() {
       <Header />
 
       {/* main content */}
-      <main className="flex-1">
+      <main className="flex-1 mt-3">
         <Main />
       </main>
 
