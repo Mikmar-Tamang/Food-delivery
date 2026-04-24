@@ -1,6 +1,6 @@
-// import Header from "../HomePageComponent/layout/Header"
+import Header from "../HomePageComponent/layout/Header"
 import Main from "../HomePageComponent/layout/Main"
-// import Footer from "../HomePageComponent/layout/Footer"
+import Footer from "../HomePageComponent/layout/Footer"
 
 
 function HomePage() {
@@ -8,7 +8,7 @@ function HomePage() {
     <div className="min-h-screen flex flex-col">
 
       {/* header */}
-      {/* <Header /> */}
+      <Header />
 
       {/* main content */}
       <main className="flex-1">
@@ -16,7 +16,7 @@ function HomePage() {
       </main>
 
       {/* footer */}
-      {/* <Footer /> */}
+      <Footer />
 
     </div>
   )
