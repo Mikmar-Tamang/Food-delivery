@@ -5,13 +5,19 @@ import Footer from "../HomePageComponent/layout/Footer"
 
 function HomePage() {
   return (
-    <div className="flex flex-col gap-10">
-      {/* header part */}
-      <Header/>
-      {/* main */}
-      <Main />
+    <div className="min-h-screen flex flex-col">
+
+      {/* header */}
+      <Header />
+
+      {/* main content */}
+      <main className="flex-1 px-4 md:px-6 lg:px-10 py-4 md:py-6">
+        <Main />
+      </main>
+
       {/* footer */}
       <Footer />
+
     </div>
   )
 }
