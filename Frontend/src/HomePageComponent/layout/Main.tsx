@@ -481,13 +481,11 @@ function Main() {
               </SwiperSlide>
             ))
           ) : (
-            <SwiperSlide>
               <div className="w-full flex justify-center items-center py-10">
-                <p className="text-xl md:text-3xl font-bold text-yellow-500">
+                <p className="text-xl md:text-3xl text-center font-bold text-yellow-500">
                   Waiting For Food Items...
                 </p>
               </div>
-            </SwiperSlide>
           )}
         </Swiper>
       </div>
