@@ -38,15 +38,15 @@ const Dashboard = () => {
             Home
           </li>
 
-          <li onClick={() => setActive("profile")} className="cursor-pointer bg-amber-600 p-2 rounded">
+          <li onClick={() => setActive("profile")} className="cursor-pointer active:bg-amber-600 p-2 rounded">
             {open && "Profile"}
           </li>
 
-          <li onClick={() => setActive("orders")} className="cursor-pointer bg-amber-600 p-2 rounded">
+          <li onClick={() => setActive("orders")} className="cursor-pointer active:bg-amber-600 p-2 rounded">
             {open && "Orders"}
           </li>
 
-          <li onClick={() => setActive("basket")} className="cursor-pointer bg-amber-600 p-2 rounded">
+          <li onClick={() => setActive("basket")} className="cursor-pointer active:bg-amber-600 p-2 rounded">
             {open && "Basket"}
           </li>
 
