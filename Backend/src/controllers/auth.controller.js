@@ -164,21 +164,23 @@ const userLogin = async (req, res) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
+
+    if (!user) {
+  return res.status(400).json({
+    message: "User not found"
+  });
+}
+
     if (!user.isVerified) {
   return res.status(400).json({
     message: "Please verify your email first",
+    allowResendVerification: true
   });
 }
 
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
-      return res.status(400).json({ message: "Invalid credentials" });
-    }
-
-    if (!user.isVerified) {
-      return res.status(403).json({
-        message: "Please verify your email first"
-      });
+      return res.status(400).json({ message: "Invalid email and password" });
     }
 
     const token = jwt.sign(

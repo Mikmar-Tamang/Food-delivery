@@ -5,6 +5,9 @@ import * as yup from "yup";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import type { LoginForm } from "../../types/auth.types";
+import { useState } from "react";
+import { AxiosError } from "axios";
+import { ErrorResponse } from "../../types/api.types";
 
 const schema: yup.ObjectSchema<LoginForm> = yup.object({
   email: yup.string().email().required(),
@@ -12,6 +15,10 @@ const schema: yup.ObjectSchema<LoginForm> = yup.object({
 });
 
 const LoginPage = () => {
+ 
+  const [showResendVerification, setShowResendVerification] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+
   const navigate = useNavigate();
 
   const {
@@ -23,12 +30,31 @@ const LoginPage = () => {
   });
 
   const onSubmit = async (data: LoginForm) => {
+  setUserEmail(data.email);
+
+    try {
     await axios.post(import.meta.env.VITE_API_URL+"/api/auth/user/login", data, {
       withCredentials: true,
     });
 
     navigate("/admin");
-  };
+  } catch (error) {
+    const err = error as AxiosError<ErrorResponse>;
+   if(err.response?.data?.allowResendVerification) {
+    setShowResendVerification(true);
+   }
+    
+  }
+};
+
+const handleResendVerification = async () => {
+  try {
+    await axios.post(import.meta.env.VITE_API_URL+"/api/auth/user/resend-verification",
+       {email: userEmail});
+  } catch (error) {
+    console.error("Error resending verification email:", error);
+  }
+};
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -51,6 +77,19 @@ const LoginPage = () => {
             className="input"
           />
           <p className="text-red-500 text-sm">{errors.password?.message}</p>
+
+          {showResendVerification && (
+            <p className="text-yellow-500 text-sm">
+              Please verify your email.{" "}
+              <button
+                type="button"
+                className="text-blue-500 underline"
+                onClick={handleResendVerification}
+              >
+                Resend Verification Email
+              </button>
+            </p>
+          )}
 
           <button className="btn">
             Login
