@@ -1,4 +1,4 @@
-import Basket from "../models/Basket.js";
+import Basket from "../models/baseket.js";
 
 // ➕ ADD TO CART
 export const addToCart = async (req, res) => {
@@ -39,7 +39,7 @@ export const addToCart = async (req, res) => {
 // 📦 GET CART
 export const getCart = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user._id;
 
     const basket = await Basket.findOne({ userId }).populate("items.foodId");
 
@@ -55,7 +55,7 @@ export const getCart = async (req, res) => {
 // ❌ REMOVE ITEM
 export const removeFromCart = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user._id;
     const { foodId } = req.body;
 
     const basket = await Basket.findOne({ userId });
