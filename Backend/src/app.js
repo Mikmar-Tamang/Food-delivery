@@ -6,6 +6,7 @@ import cors from 'cors';
 
 import authRoutes from './routes/auth.routes.js';
 import foodRoutes from './routes/food.routes.js';
+import cartRoutes from './routes/cart.routes.js';
 
 
 app.use(cors({
@@ -37,6 +38,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/food', foodRoutes);
+app.use('/api/cart', cartRoutes);
 
 
 export default app;
