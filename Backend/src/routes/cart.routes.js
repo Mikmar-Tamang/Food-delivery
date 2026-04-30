@@ -1,4 +1,5 @@
 import express from "express";
+import authMiddleware from "../middlewares/auth.middleware.js";
 import {
   addToCart,
   getCart,
@@ -8,12 +9,12 @@ import {
 const router = express.Router();
 
 // ➕ add item
-router.post("/add", addToCart);
+router.post("/add", authMiddleware.userId, addToCart);
 
 // 📦 get cart
-router.get("/", getCart);
+router.get("/", authMiddleware.userId, getCart);
 
 // ❌ remove item
-router.delete("/remove", removeFromCart);
+router.delete("/remove", authMiddleware.userId, removeFromCart);
 
 export default router;

@@ -1,14 +1,13 @@
-import Basket from "../models/baseket.js";
+import Basket from "../models/Basket.js";
 
 // ➕ ADD TO CART
 export const addToCart = async (req, res) => {
   try {
-    const userId = req.user.id; // from auth middleware
     const { foodId } = req.body;
+    const userId = req.user._id; // ✅ comes from your middleware
 
     let basket = await Basket.findOne({ userId });
 
-    // if no basket → create one
     if (!basket) {
       basket = new Basket({
         userId,
@@ -30,7 +29,6 @@ export const addToCart = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Added to basket",
       basket,
     });
   } catch (err) {
@@ -38,9 +36,10 @@ export const addToCart = async (req, res) => {
   }
 };
 
+// 📦 GET CART
 export const getCart = async (req, res) => {
   try {
-    const userId = req.user.id;
+    const userId = req.userId;
 
     const basket = await Basket.findOne({ userId }).populate("items.foodId");
 
@@ -53,9 +52,10 @@ export const getCart = async (req, res) => {
   }
 };
 
+// ❌ REMOVE ITEM
 export const removeFromCart = async (req, res) => {
   try {
-    const userId = req.user.id;
+    const userId = req.userId;
     const { foodId } = req.body;
 
     const basket = await Basket.findOne({ userId });
@@ -72,7 +72,6 @@ export const removeFromCart = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Item removed",
       basket,
     });
   } catch (err) {
