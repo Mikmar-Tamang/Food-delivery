@@ -1,4 +1,4 @@
-import Basket from "../models/Basket.js";
+import Basket from "../models/baseket.js";
 
 // ➕ ADD TO CART
 export const addToCart = async (req, res) => {
