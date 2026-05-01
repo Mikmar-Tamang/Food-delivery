@@ -160,7 +160,7 @@ useEffect(() => {
         </div>
         {selectedFood && (
   <div
-    className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+    className="bg-white/95 backdrop-blur-md rounded-xl p-6 w-[350px] relative shadow-2xl"
     onClick={() => setSelectedFood(null)}
   >
     {/* Card */}
