@@ -17,6 +17,7 @@ import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import { FoodDiscountType } from "../../types/foodDiscount";
+import { addToCart } from "../../api/cart";
 
 function Main() {
   const [food, setFood] = useState<FoodType[]>([]);
@@ -119,7 +120,7 @@ function Main() {
 
                   <p className="font-bold mt-1">${item.price}</p>
 
-                  <button className="bg-[#F17228] rounded-lg text-white text-sm h-10 w-full mt-2">
+                  <button onClick={() => addToCart(item._id, 1)} className="bg-[#F17228] rounded-lg text-white text-sm h-10 w-full mt-2">
                     Order Now
                   </button>
                 </div>

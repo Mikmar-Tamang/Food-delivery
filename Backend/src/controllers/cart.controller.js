@@ -1,17 +1,22 @@
 import Basket from "../models/baseket.js";
 
-// ➕ ADD TO CART
 export const addToCart = async (req, res) => {
   try {
-    const { foodId } = req.body;
+    const { foodId, quantity } = req.body;
     const userId = req.user._id; // ✅ comes from your middleware
+
+      if (!foodId) {
+      return res.status(400).json({ message: "foodId is required" });
+    }
+
+    const qty = Number(quantity) > 0 ? Number(quantity) : 1;
 
     let basket = await Basket.findOne({ userId });
 
     if (!basket) {
       basket = new Basket({
         userId,
-        items: [{ foodId, quantity: 1 }],
+        items: [{ foodId, quantity: qty }],
       });
     } else {
       const itemIndex = basket.items.findIndex(
@@ -19,9 +24,9 @@ export const addToCart = async (req, res) => {
       );
 
       if (itemIndex > -1) {
-        basket.items[itemIndex].quantity += 1;
+        basket.items[itemIndex].quantity += qty;
       } else {
-        basket.items.push({ foodId, quantity: 1 });
+        basket.items.push({ foodId, quantity: qty });
       }
     }
 
@@ -36,7 +41,6 @@ export const addToCart = async (req, res) => {
   }
 };
 
-// 📦 GET CART
 export const getCart = async (req, res) => {
   try {
     const userId = req.user._id;
@@ -52,7 +56,6 @@ export const getCart = async (req, res) => {
   }
 };
 
-// ❌ REMOVE ITEM
 export const removeFromCart = async (req, res) => {
   try {
     const userId = req.user._id;
