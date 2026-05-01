@@ -19,9 +19,14 @@ import "swiper/css/navigation";
 import { FoodDiscountType } from "../../types/foodDiscount";
 import { addToCart } from "../../api/cart";
 
+
 function Main() {
   const [food, setFood] = useState<FoodType[]>([]);
   const [foodDiscount, setFoodDiscount] = useState<FoodDiscountType[]>([]);
+  const [selectedFood, setSelectedFood] = useState<FoodType | null>(null);
+  const [qty, setQty] = useState(1);
+  const [loading, setLoading] = useState(false);
+  
 
   useEffect(() => {
     const fetchFood = async () => {
@@ -45,6 +50,25 @@ function Main() {
 
     fetchFood();
   }, []);
+
+  useEffect(() => {
+  if (selectedFood) {
+    setQty(1);
+  }
+}, [selectedFood]);
+
+useEffect(() => {
+  if (selectedFood) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "auto";
+  }
+
+  // cleanup (important safety)
+  return () => {
+    document.body.style.overflow = "auto";
+  };
+}, [selectedFood]);
 
   return (
     <main className="flex flex-col gap-10">
@@ -101,7 +125,7 @@ function Main() {
           >
             {food.map((item) => (
               <SwiperSlide key={item._id}>
-                <div className="bg-white rounded-2xl p-3 shadow-md">
+                <div onClick={() => setSelectedFood(item)} className="bg-white rounded-2xl p-3 shadow-md">
                   <img
                     src={item.image?.url}
                     className="w-full rounded-2xl"
@@ -120,7 +144,8 @@ function Main() {
 
                   <p className="font-bold mt-1">${item.price}</p>
 
-                  <button onClick={() => addToCart(item._id, 1)} className="bg-[#F17228] rounded-lg text-white text-sm h-10 w-full mt-2">
+                  <button onClick={(e) => { e.stopPropagation(); setSelectedFood(item);}} 
+                  className="bg-[#F17228] rounded-lg text-white text-sm h-10 w-full mt-2">
                     Order Now
                   </button>
                 </div>
@@ -133,6 +158,64 @@ function Main() {
             <img src={rightArrow} className="w-12 md:w-16" alt="next" />
           </div>
         </div>
+        {selectedFood && (
+  <div
+    className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+    onClick={() => setSelectedFood(null)}
+  >
+    {/* Card */}
+    <div
+      className="bg-white rounded-xl p-6 w-[350px] relative"
+      onClick={(e) => e.stopPropagation()} // ❗ prevents closing when clicking inside
+    >
+      {/* Close button */}
+      <button
+        className="absolute top-2 right-2 text-xl"
+        onClick={() => setSelectedFood(null)}
+      >
+        ✖
+      </button>
+
+      {/* Image */}
+      <img
+        src={selectedFood.image?.url}
+        className="w-full h-40 object-cover rounded-lg mb-4"
+      />
+
+      {/* Name */}
+      <h2 className="text-xl font-bold">{selectedFood.name}</h2>
+
+      {/* Price */}
+      <p className="text-gray-600 mb-4">Rs {selectedFood.price}</p>
+
+      {/* Quantity */}
+      <div className="flex items-center gap-4 mb-4">
+        <button className="bg-gray-300 px-3" onClick={() => setQty(Math.max(1, qty - 1))}>
+          -
+        </button>
+        <span>{qty}</span>
+        <button className="bg-gray-300 px-3" onClick={() => setQty(qty + 1)}>
+          +
+        </button>
+      </div>
+
+      {/* Add to cart */}
+      <button  onClick={async () => {
+  try {
+    setLoading(true);
+    await addToCart(selectedFood._id, qty);
+    setSelectedFood(null);
+  } catch (err) {
+    console.log(err);
+  } finally {
+    setLoading(false); // ✅ ALWAYS runs
+  }
+  }} disabled={loading} className="bg-amber-500 text-white w-full py-2 rounded">
+        {loading ? "Adding..." : "Add to Basket"}
+      </button>
+    </div>
+  </div>
+)}
       </div>
 
       {/* ================= PART 4 FEATURED RESTAURANTS ================= */}
