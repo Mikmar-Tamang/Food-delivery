@@ -70,6 +70,8 @@ useEffect(() => {
   };
 }, [selectedFood]);
 
+const totalPrice = selectedFood ? Number(selectedFood.price) * qty : 0;
+
   return (
     <main className="flex flex-col gap-10">
 
@@ -186,7 +188,7 @@ useEffect(() => {
       <h2 className="text-xl font-bold">{selectedFood.name}</h2>
 
       {/* Price */}
-      <p className="text-gray-600 mb-4">Rs {selectedFood.price}</p>
+      <p className="text-gray-600 mb-4">Rs {totalPrice.toFixed(2)}</p>
 
       {/* Quantity */}
       <div className="flex items-center gap-4 mb-4">
