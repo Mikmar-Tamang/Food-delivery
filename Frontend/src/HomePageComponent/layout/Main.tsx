@@ -37,7 +37,7 @@ function Main() {
         );
 
         const res1 = await axios.get(
-          import.meta.env.VITE_API_URL + "/api/food/discount",
+          import.meta.env.VITE_API_URL + "/api/food-discount/discount",
           { withCredentials: true }
         );
 
@@ -167,7 +167,7 @@ const totalPrice = selectedFood ? Number(selectedFood.price) * qty : 0;
   >
     {/* Card */}
     <div
-      className="bg-white rounded-xl p-6 w-[350px] relative"
+      className="bg-white rounded-xl p-6 w-87.5 relative"
       onClick={(e) => e.stopPropagation()} // ❗ prevents closing when clicking inside
     >
       {/* Close button */}

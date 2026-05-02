@@ -1,5 +1,5 @@
-import FoodPartner from "../models/food-partner.model.js";
-import User from "../models/user.model.js";
+import FoodPartner from "../modules/food-partner/food-partner.model.js";
+import User from "../modules/user/user.model.js";
 import jwt from "jsonwebtoken";
 
 const getTokenData = (req) => {

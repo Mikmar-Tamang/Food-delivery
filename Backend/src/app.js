@@ -4,9 +4,10 @@ const app = express();
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
-import authRoutes from './routes/auth.routes.js';
-import foodRoutes from './routes/food.routes.js';
-import cartRoutes from './routes/cart.routes.js';
+import authRoutes from './modules/auth/routes/auth.routes.js';
+import foodRoutes from './modules/food/routes/food.routes.js';
+import cartRoutes from './modules/cart/routes/cart.routes.js';
+import foodDiscount from './modules/food-discount/routes/foodDiscount.route.js';
 
 
 app.use(cors({
@@ -39,6 +40,6 @@ app.get('/', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/food', foodRoutes);
 app.use('/api/cart', cartRoutes);
-
+app.use('/api/food-discount', foodDiscount);
 
 export default app;
