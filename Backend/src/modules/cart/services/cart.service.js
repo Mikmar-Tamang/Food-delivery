@@ -1,6 +1,6 @@
 import Basket from "../models/baseket.js";
 
-export const addToCart = async (req, res) => {
+const addToCart = async (req, res) => {
   try {
     const { foodId, quantity } = req.body;
     const userId = req.user._id; // ✅ comes from your middleware
@@ -41,7 +41,7 @@ export const addToCart = async (req, res) => {
   }
 };
 
-export const getCart = async (req, res) => {
+const getCart = async (req, res) => {
   try {
     const userId = req.user._id;
 
@@ -56,7 +56,7 @@ export const getCart = async (req, res) => {
   }
 };
 
-export const removeFromCart = async (req, res) => {
+const removeFromCart = async (req, res) => {
   try {
     const userId = req.user._id;
     const { foodId } = req.body;
@@ -80,4 +80,10 @@ export const removeFromCart = async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
+};
+
+export default {
+  addToCart,
+  getCart,
+  removeFromCart,
 };

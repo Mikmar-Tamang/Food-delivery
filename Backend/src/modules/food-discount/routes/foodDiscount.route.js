@@ -1,7 +1,7 @@
 import express from 'express';
 const router = express.Router();
 import foodDiscountController from '../controllers/foodDiscount.controller.js';
-import authMiddleware from '../middlewares/auth.middleware.js'; 
+import authMiddleware from '../../../middlewares/auth.middleware.js'; 
 import multer from 'multer';
 
 // post /api/food-discount/discount

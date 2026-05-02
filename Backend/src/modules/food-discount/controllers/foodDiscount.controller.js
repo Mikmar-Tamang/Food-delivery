@@ -1,4 +1,4 @@
-import foodDiscountService from "../services/foodDiscount.service";
+import foodDiscountService from "../services/foodDiscount.service.js";
 
 const createFoodDiscount = async (req, res) => {
   try {
