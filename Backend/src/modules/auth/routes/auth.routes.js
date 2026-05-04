@@ -5,7 +5,7 @@ import authMiddleware from '../../../middlewares/auth.middleware.js';
 import multer from 'multer';
 
 // user registration and login routes
-router.post('/user/register', authController.userRegister);
+router.post('/user/register', authController.RegisterUser);
 router.get("/user/verify-email", authController.userVerifyEmail);
 router.post("/user/resend-verification", authController.userResendVerification);
 router.post('/user/login', authController.userLogin);
