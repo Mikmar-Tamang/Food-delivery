@@ -57,4 +57,15 @@ const userId = async (req, res, next) => {
   next();
 };
 
-export default {foodPartnerId, userId};
+const authMiddleware = (req, res, next) => {
+  const decoded = getTokenData(req);
+
+  if (!decoded) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  req.userId = decoded.id;
+  next();
+};
+
+export default {foodPartnerId, userId, getTokenData, authMiddleware};

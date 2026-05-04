@@ -14,6 +14,13 @@ const foodPartnerSchema = new mongoose.Schema({
     password: { type: String, required: true },
     restaurantName: { type: String, required: true },
     restaurantAddress: { type: String, required: true },
+    status: {
+    type: String,
+    enum: ["PENDING", "APPROVED", "REJECTED"],
+    default: "PENDING"
+    },
+
+    isBanned: { type: Boolean, default: false },
     restaurantPp: restaurantPpSchema
 }, { timestamps: true });
 
