@@ -144,11 +144,13 @@ const userLogin = async (req, res) => {
 
 const userLogout = async (req, res) => {
   try {
-    const result = await authService.logoutUser();
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none"
+    });
 
-    res.clearCookie("token");
-
-    res.json(result);
+    res.json({ message: "Logout successful" });
 
   } catch (error) {
     res.status(500).json({ message: error.message });

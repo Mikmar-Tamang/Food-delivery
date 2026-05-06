@@ -179,10 +179,6 @@ delete userObj.password;
 return { user: userObj, token };
 };
 
-const logoutUser = async () => {
-  return { message: "Logout successful" };
-};
-
 const registerFoodPartner = async (body, file) => {
   const { name, email, password, restaurantName, restaurantAddress } = body;
 
@@ -263,5 +259,5 @@ const getUserMe = async (user) => {
 };
 
 export default {userRegister, verifyEmail, resendVerification,
-     loginUser, logoutUser, registerFoodPartner, loginFoodPartner,
+     loginUser, registerFoodPartner, loginFoodPartner,
       foodPartnerLogout, getUserMe}
