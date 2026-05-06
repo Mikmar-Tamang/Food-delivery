@@ -167,7 +167,10 @@ const loginUser = async (email, password) => {
     { expiresIn: "1h" }
   );
 
-  return { user, token };
+ const userObj = user.toObject();
+delete userObj.password;
+
+return { user: userObj, token };
 };
 
 const logoutUser = async () => {
