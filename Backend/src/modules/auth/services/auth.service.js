@@ -146,6 +146,12 @@ const loginUser = async (email, password) => {
     throw err;
   }
 
+  if (user.isBanned) {
+  const err = new Error("Your account is banned");
+  err.status = 403;
+  throw err;
+  }
+
   if (!user.isVerified) {
     const err = new Error("Please verify your email first");
     err.status = 400;

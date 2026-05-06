@@ -52,6 +52,8 @@ export const banUser = async (userId) => {
   user.isBanned = true;
   await user.save();
 
+    
+
   return user;
 };
 
