@@ -55,7 +55,7 @@ const PartnerForm = () => {
       });
 
       localStorage.setItem("email", data.email);
-      navigate("/verify-notice");
+      navigate("/partner-notice");
     } catch (error) {
       console.error("Registration error:", error);
       // Handle error appropriately
