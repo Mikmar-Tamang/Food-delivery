@@ -4,8 +4,9 @@ import { lazy, Suspense } from "react";
 const HomePage = lazy(() => import('../pages/HomePage'))
 const LoginPage= lazy(() => import('../HomePageComponent/auth/LoginPage'))
 const UserForm= lazy(() => import('../HomePageComponent/auth/UserForm'))
-const PartnerForm= lazy(() => import('../HomePageComponent/auth/partnerForm'))
+const PartnerForm= lazy(() => import('../HomePageComponent/auth/PartnerForm'))
 const VerifyNotice= lazy(() => import('../pages/auth/VerifyNotice'))
+const PartnerNotice= lazy(() => import('../pages/auth/PartnerNotice'))
 const VerifyEmail= lazy(() => import('../pages/auth/VerifyEmail'))
 const ProtectedRoute= lazy(() => import('./ProtectedRoute'))
 const Dashboard = lazy(() => import('../pages/admin/Dashboard'))
@@ -23,6 +24,7 @@ function AppRoutes() {
       <Route path="/partner-register" element={<PartnerForm/>}/>
       <Route path="/verify-notice" element={<VerifyNotice />} />
       <Route path="/verify-email" element={<VerifyEmail />} />
+      <Route path="/partner-notice" element={<PartnerNotice />} />
       <Route path="/dashboard" element={<ProtectedRoute />}>
         <Route index element={<Dashboard />} />
       </Route>
