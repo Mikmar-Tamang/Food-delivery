@@ -192,6 +192,48 @@ const menuItems = {
           </div>
         )}
 
+        {/* ADMIN DASHBOARD */}
+       {user?.role === "ADMIN" && active === "dashboard" && (
+        <div>
+        <h1 className="text-2xl font-bold mb-4">Admin Dashboard</h1>
+
+       <div className="grid grid-cols-3 gap-4">
+        <div className="bg-white p-6 rounded shadow">
+          👤 Users
+        </div>
+
+       <div className="bg-white p-6 rounded shadow">
+        🍔 Food Partners
+       </div>
+
+      <div className="bg-white p-6 rounded shadow">
+        📦 Orders
+      </div>
+       </div>
+     </div>
+     )}
+  
+      {user?.role === "ADMIN" && active === "users" && (
+  <div>
+    <h1 className="text-2xl font-bold mb-4">All Users</h1>
+
+    <div className="bg-white p-4 rounded shadow">
+      <p>Loading users...</p>
+    </div>
+  </div>
+)}
+
+{user?.role === "ADMIN" && active === "partners" && (
+  <div>
+    <h1 className="text-2xl font-bold mb-4">Food Partners</h1>
+
+    <div className="bg-white p-4 rounded shadow">
+      <p>Pending / Approved / Rejected partners will show here...</p>
+    </div>
+  </div>
+)}
+
+
       </main>
     </div>
   );
