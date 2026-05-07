@@ -442,6 +442,13 @@ const menuItems = {
         Ban
       </button>
 
+      <button
+  onClick={() => setSelectedPartner(null)}
+  className="bg-gray-500 text-white px-3 py-1 rounded mb-4"
+>
+  Close
+</button>
+
     </div>
   </div>
 )}
