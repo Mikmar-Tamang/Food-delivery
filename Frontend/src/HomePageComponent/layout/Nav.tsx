@@ -33,7 +33,7 @@ function Nav() {
   }, [location]);
 
   const handleDashboard = () => {
-    navigation("/admin");
+    navigation("/dashboard");
   };
 
   return (

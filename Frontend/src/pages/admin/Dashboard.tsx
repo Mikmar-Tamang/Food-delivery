@@ -2,14 +2,37 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Basket } from "../../types/baseket";
+import { User } from "../../types/user.ts";
 
 const Dashboard = () => {
+
+  const [user, setUser] = useState<User | null>(null);
+
   const [open, setOpen] = useState(true);
   const [active, setActive] = useState("profile");
+
 
   const [basket, setBasket] = useState<Basket | null>(null);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+  const fetchUser = async () => {
+    try {
+      const res = await axios.get(
+        import.meta.env.VITE_API_URL + "/api/auth/user/me",
+        { withCredentials: true }
+      );
+
+      setUser(res.data.user);
+
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  fetchUser();
+}, []);
 
   const logout = async () => {
     try {
@@ -41,6 +64,16 @@ const Dashboard = () => {
   fetchBasket();
 }, []);
 
+const menuItems = {
+  USER: ["profile", "orders", "basket"],
+
+  ADMIN: [
+    "dashboard",
+    "users",
+    "partners"
+  ]
+};
+
   return (
     <div className="flex min-h-screen">
 
@@ -59,17 +92,16 @@ const Dashboard = () => {
             Home
           </li>
 
-          <li onClick={() => setActive("profile")} className="cursor-pointer p-2 rounded-md transition-colors duration-200 ease-in-out hover:bg-amber-500 active:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-400">
-            {open && "Profile"}
-          </li>
-
-          <li onClick={() => setActive("orders")} className="cursor-pointer p-2 rounded-md transition-colors duration-200 ease-in-out hover:bg-amber-500 active:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-400">
-            {open && "Orders"}
-          </li>
-
-          <li onClick={() => setActive("basket")} className="cursor-pointer p-2 rounded-md transition-colors duration-200 ease-in-out hover:bg-amber-500 active:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-400">
-            {open && "Basket"}
-          </li>
+          {user &&
+  menuItems[user.role]?.map((item) => (
+    <li
+      key={item}
+      onClick={() => setActive(item)}
+      className="cursor-pointer p-2 rounded-md transition-colors duration-200 ease-in-out hover:bg-amber-500"
+    >
+      {open && item}
+    </li>
+))}
 
         </ul>
 

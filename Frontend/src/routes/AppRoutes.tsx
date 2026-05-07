@@ -6,7 +6,7 @@ const LoginPage= lazy(() => import('../HomePageComponent/auth/LoginPage'))
 const Register= lazy(() => import('../HomePageComponent/auth/Register'))
 const VerifyNotice= lazy(() => import('../pages/auth/VerifyNotice'))
 const VerifyEmail= lazy(() => import('../pages/auth/VerifyEmail'))
-const AdminRoute= lazy(() => import('../routes/AdminRoute'))
+const ProtectedRoute= lazy(() => import('./ProtectedRoute'))
 const Dashboard = lazy(() => import('../pages/admin/Dashboard'))
 
 function AppRoutes() {
@@ -21,7 +21,7 @@ function AppRoutes() {
       <Route path="/register" element={<Register/>}/>
       <Route path="/verify-notice" element={<VerifyNotice />} />
       <Route path="/verify-email" element={<VerifyEmail />} />
-      <Route path="/admin" element={<AdminRoute />}>
+      <Route path="/dashboard" element={<ProtectedRoute />}>
         <Route index element={<Dashboard />} />
       </Route>
  </Routes>

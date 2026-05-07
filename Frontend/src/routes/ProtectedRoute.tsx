@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Outlet, Navigate } from "react-router-dom";
 
-function AdminRoute() {
+function ProtectedRoute() {
   const [loading, setLoading] = useState(true);
   const [auth, setAuth] = useState(false);
 
@@ -32,4 +32,4 @@ function AdminRoute() {
   return <Outlet />;
 }
 
-export default AdminRoute;
+export default ProtectedRoute;
