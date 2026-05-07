@@ -81,7 +81,7 @@ function Nav() {
             </button>
 
             <button
-              onClick={() => navigation("/register")}
+              onClick={() => navigation("/user-register")}
               className="px-3 py-1 rounded-md shadow-md text-green-500 font-bold"
             >
               Register
