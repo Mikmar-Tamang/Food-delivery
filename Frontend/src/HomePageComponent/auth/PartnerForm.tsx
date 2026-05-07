@@ -31,6 +31,8 @@ const PartnerForm = () => {
     // Get the file input element
     const fileInput = document.getElementById('restaurantPp') as HTMLInputElement;
     const file = fileInput?.files?.[0];
+
+    console.log("File selected:", file);
     
     if (!file) {
       alert("Restaurant profile picture is required");
@@ -45,6 +47,7 @@ const PartnerForm = () => {
     formData.append('restaurantName', data.restaurantName);
     formData.append('restaurantAddress', data.restaurantAddress);
     formData.append('restaurantPp', file);
+
 
     try {
       await axios.post(import.meta.env.VITE_API_URL + "/api/auth/food-partner/register", formData, {
