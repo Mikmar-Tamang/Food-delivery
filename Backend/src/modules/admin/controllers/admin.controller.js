@@ -3,7 +3,6 @@ import adminService from "../services/admin.service.js";
 const getAllUsers = async (req, res) => {
   try {
     const users = await adminService.getAllUsers();
-
     res.status(200).json({
       message: "Users fetched successfully",
       data: users,
@@ -18,7 +17,6 @@ const getAllUsers = async (req, res) => {
 const getAllPartners = async (req, res) => {
   try {
     const partners = await adminService.getAllPartners();
-
     res.status(200).json({
       message: "Food partners fetched successfully",
       data: partners,

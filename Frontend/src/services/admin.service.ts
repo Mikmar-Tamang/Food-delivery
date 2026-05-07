@@ -9,7 +9,8 @@ export const getAllUsers = async (): Promise<User[]> => {
     withCredentials: true,
   });
 
-  return res.data.users;
+  console.log(res.data);
+  return res.data;
 };
 
 export const banUser = async (id: string): Promise<User> => {
@@ -28,7 +29,7 @@ export const getAllPartners = async (): Promise<Partner[]> => {
     withCredentials: true,
   });
 
-  return res.data.partners;
+  return res.data;
 };
 
 export const approvePartner = async (id: string): Promise<Partner> => {
