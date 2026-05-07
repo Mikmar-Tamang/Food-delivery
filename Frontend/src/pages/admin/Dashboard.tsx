@@ -354,26 +354,6 @@ const menuItems = {
 >
   View Details
 </button>
-              <button
-                onClick={() => handleApprovePartner(p._id)}
-                className="bg-green-500 text-white px-3 py-1 rounded"
-              >
-                Approve
-              </button>
-
-              <button
-                onClick={() => handleBanPartner(p._id)}
-                className="bg-red-500 text-white px-3 py-1 rounded"
-              >
-                Ban
-              </button>
-
-              <button
-               onClick={() => handleRejectPartner(p._id)}
-               className="bg-yellow-500 text-white px-3 py-1 rounded"
-              >
-             Reject
-             </button>
             </div>
 
           </div>
