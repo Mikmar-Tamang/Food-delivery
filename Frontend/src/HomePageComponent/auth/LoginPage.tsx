@@ -37,7 +37,7 @@ const LoginPage = () => {
       withCredentials: true,
     });
 
-    navigate("/admin");
+    navigate("/dashboard");
   } catch (error) {
     const err = error as AxiosError<ErrorResponse>;
    if(err.response?.data?.allowResendVerification) {
