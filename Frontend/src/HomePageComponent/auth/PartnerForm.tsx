@@ -47,7 +47,7 @@ const PartnerForm = () => {
     formData.append('restaurantPp', file);
 
     try {
-      await axios.post(import.meta.env.VITE_API_URL + "/api/auth/partner/register", formData, {
+      await axios.post(import.meta.env.VITE_API_URL + "/api/auth/food-partner/register", formData, {
         withCredentials: true,
         headers: {
           'Content-Type': 'multipart/form-data',
