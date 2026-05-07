@@ -9,7 +9,8 @@ export type User = {
 export type Partner = {
   _id: string;
   restaurantName: string;
-  ownerName: string;
+  name: string;
+  email: string;
   status: "PENDING" | "APPROVED" | "REJECTED";
   isBanned: boolean;
 };

@@ -11,6 +11,7 @@ const Dashboard = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [partners, setPartners] = useState<Partner[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedPartner, setSelectedPartner] = useState<Partner | null>(null);
 
 
   const [open, setOpen] = useState(true);
@@ -20,6 +21,8 @@ const Dashboard = () => {
   const [basket, setBasket] = useState<Basket | null>(null);
 
   const navigate = useNavigate();
+
+
 
   useEffect(() => {
   const fetchPartners = async () => {
@@ -336,7 +339,7 @@ const menuItems = {
             <div>
               <p className="font-bold">{p.restaurantName}</p>
               <p className="text-sm text-gray-500">
-                Owner: {p.ownerName}
+                Owner: {p.name}
               </p>
               <p className="text-sm">
                 Status: {p.status}
@@ -344,6 +347,13 @@ const menuItems = {
             </div>
 
             <div className="flex gap-2">
+
+              <button
+   onClick={() => setSelectedPartner(p)}
+  className="bg-blue-500 text-white px-3 py-1 rounded"
+>
+  View Details
+</button>
               <button
                 onClick={() => handleApprovePartner(p._id)}
                 className="bg-green-500 text-white px-3 py-1 rounded"
@@ -371,6 +381,69 @@ const menuItems = {
       </div>
     </div>
   )
+)}
+{selectedPartner && (
+  <div className="bg-white mt-6 p-6 rounded shadow">
+    
+    <h2 className="text-xl font-bold mb-4">
+      Partner Details
+    </h2>
+
+    <p>
+      <strong>Restaurant:</strong>
+      {" "}
+      {selectedPartner.restaurantName}
+    </p>
+
+    <p>
+      <strong>Owner:</strong>
+      {" "}
+      {selectedPartner.name}
+    </p>
+
+    <p>
+      <strong>Email:</strong>
+      {" "}
+      {selectedPartner.email}
+    </p>
+
+    <p>
+      <strong>Status:</strong>
+      {" "}
+      {selectedPartner.status}
+    </p>
+
+    <p>
+      <strong>Banned:</strong>
+      {" "}
+      {selectedPartner.isBanned ? "Yes" : "No"}
+    </p>
+
+    <div className="flex gap-3 mt-4">
+
+      <button
+        onClick={() => handleApprovePartner(selectedPartner._id)}
+        className="bg-green-500 text-white px-4 py-2 rounded"
+      >
+        Approve
+      </button>
+
+      <button
+        onClick={() => handleRejectPartner(selectedPartner._id)}
+        className="bg-yellow-500 text-white px-4 py-2 rounded"
+      >
+        Reject
+      </button>
+
+      <button
+        onClick={() => handleBanPartner(selectedPartner._id)}
+        className="bg-red-500 text-white px-4 py-2 rounded"
+      >
+        Ban
+      </button>
+
+    </div>
+  </div>
 )}
 
 
