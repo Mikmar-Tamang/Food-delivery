@@ -1,6 +1,6 @@
 
 export type PartnerRegisterForm = {
-  displayName: string;
+  name: string;
   email: string;
   password: string;
   restaurantName: string;

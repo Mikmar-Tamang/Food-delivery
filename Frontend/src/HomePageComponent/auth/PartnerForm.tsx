@@ -7,7 +7,7 @@ import type { PartnerRegisterForm } from "../../types/auth.types";
 
 // Updated schema - remove restaurantPp from Yup validation
 const schema: yup.ObjectSchema<Omit<PartnerRegisterForm, 'restaurantPp'>> = yup.object({
-  displayName: yup.string().required("Display name is required"),
+  name: yup.string().required("Name is required"),
   email: yup.string().email("Invalid email").required("Email is required"),
   password: yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
   restaurantName: yup.string().required("Restaurant name is required"),
@@ -39,7 +39,7 @@ const PartnerForm = () => {
 
     // Create FormData for file upload
     const formData = new FormData();
-    formData.append('displayName', data.displayName);
+    formData.append('name', data.name);
     formData.append('email', data.email);
     formData.append('password', data.password);
     formData.append('restaurantName', data.restaurantName);
@@ -72,11 +72,11 @@ const PartnerForm = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <input
-              {...register("displayName")}
-              placeholder="Display Name"
+              {...register("name")}
+              placeholder="Name"
               className="input"
             />
-            <p className="text-red-500 text-sm">{errors.displayName?.message}</p>
+            <p className="text-red-500 text-sm">{errors.name?.message}</p>
           </div>
 
           <div>
