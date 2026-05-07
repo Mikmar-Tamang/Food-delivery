@@ -2,11 +2,16 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Basket } from "../../types/baseket";
-import { User } from "../../types/user.ts";
+import { User, Partner } from "../../types/user.ts";
+import { getAllUsers, banUser, getAllPartners, banPartner, approvePartner, rejectPartner} from "../../services/admin.service.ts";
 
 const Dashboard = () => {
 
   const [user, setUser] = useState<User | null>(null);
+  const [users, setUsers] = useState<User[]>([]);
+  const [partners, setPartners] = useState<Partner[]>([]);
+  const [loading, setLoading] = useState(true);
+
 
   const [open, setOpen] = useState(true);
   const [active, setActive] = useState("profile");
@@ -15,6 +20,79 @@ const Dashboard = () => {
   const [basket, setBasket] = useState<Basket | null>(null);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+  const fetchPartners = async () => {
+    try {
+      const res = await getAllPartners();
+      setPartners(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  if (user?.role === "ADMIN" && active === "partners") {
+    fetchPartners();
+  }
+}, [active, user]);
+
+const handleBanPartner = async (id: string) => {
+  try {
+    await banPartner(id);
+    const res = await getAllPartners();
+    setPartners(res);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const handleApprovePartner = async (id: string) => {
+  try {
+    await approvePartner(id);
+    const res = await getAllPartners();
+    setPartners(res);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const handleRejectPartner = async (id: string) => {
+  try {
+    await rejectPartner(id);
+
+    const updated = await getAllPartners();
+    setPartners(updated);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+  useEffect(() => {
+  const fetchUsers = async () => {
+    try {
+      const data = await getAllUsers();
+      setUsers(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  if (user?.role === "ADMIN" && active === "users") {
+    fetchUsers();
+  }
+}, [active, user]);
+
+const handleBan = async (id: string) => {
+  try {
+    await banUser(id);
+    
+    // refresh list after ban
+    const data = await getAllUsers();
+    setUsers(data);
+  } catch (err) {
+    console.log(err);
+  }
+};
 
   useEffect(() => {
   const fetchUser = async () => {
@@ -27,7 +105,10 @@ const Dashboard = () => {
       setUser(res.data.user);
 
     } catch (err) {
-      console.log(err);
+      console.error(err);
+      setUser(null);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -214,23 +295,82 @@ const menuItems = {
      )}
   
       {user?.role === "ADMIN" && active === "users" && (
+        loading ? (
+          <p>Loading users...</p>
+        ) : (
   <div>
     <h1 className="text-2xl font-bold mb-4">All Users</h1>
 
-    <div className="bg-white p-4 rounded shadow">
-      <p>Loading users...</p>
+   <div className="bg-white p-4 rounded shadow">
+  {users.map((u) => (
+    <div key={u._id} className="flex justify-between border-b py-2">
+      <div>
+        <p>{u.username}</p>
+        <p className="text-sm text-gray-500">{u.email}</p>
+      </div>
+
+      <button
+        onClick={() => handleBan(u._id)}
+        className="bg-red-500 text-white px-3 py-1 rounded"
+      >
+        {u.isBanned ? "Banned" : "Ban"}
+      </button>
     </div>
+  ))}
+</div>
   </div>
+) 
 )}
 
 {user?.role === "ADMIN" && active === "partners" && (
-  <div>
-    <h1 className="text-2xl font-bold mb-4">Food Partners</h1>
+  loading ? (
+    <p>Loading partners...</p>
+  ) : (
+    <div>
+      <h1 className="text-2xl font-bold mb-4">All Partners</h1>
 
-    <div className="bg-white p-4 rounded shadow">
-      <p>Pending / Approved / Rejected partners will show here...</p>
+      <div className="bg-white p-4 rounded shadow">
+        {partners.map((p) => (
+          <div key={p._id} className="border-b py-3 flex justify-between">
+
+            <div>
+              <p className="font-bold">{p.restaurantName}</p>
+              <p className="text-sm text-gray-500">
+                Owner: {p.ownerName}
+              </p>
+              <p className="text-sm">
+                Status: {p.status}
+              </p>
+            </div>
+
+            <div className="flex gap-2">
+              <button
+                onClick={() => handleApprovePartner(p._id)}
+                className="bg-green-500 text-white px-3 py-1 rounded"
+              >
+                Approve
+              </button>
+
+              <button
+                onClick={() => handleBanPartner(p._id)}
+                className="bg-red-500 text-white px-3 py-1 rounded"
+              >
+                Ban
+              </button>
+
+              <button
+               onClick={() => handleRejectPartner(p._id)}
+               className="bg-yellow-500 text-white px-3 py-1 rounded"
+              >
+             Reject
+             </button>
+            </div>
+
+          </div>
+        ))}
+      </div>
     </div>
-  </div>
+  )
 )}
 
 
