@@ -8,9 +8,7 @@ export const getAllUsers = async (): Promise<User[]> => {
   const res = await axios.get(`${API}/api/admin/users`, {
     withCredentials: true,
   });
-
-  console.log(res.data.data);
-  return res.data;
+  return res.data.data;
 };
 
 export const banUser = async (id: string): Promise<User> => {
