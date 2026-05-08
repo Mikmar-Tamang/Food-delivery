@@ -10,6 +10,9 @@ const PartnerNotice= lazy(() => import('../pages/auth/PartnerNotice'))
 const VerifyEmail= lazy(() => import('../pages/auth/VerifyEmail'))
 const ProtectedRoute= lazy(() => import('./ProtectedRoute'))
 const Dashboard = lazy(() => import('../pages/admin/Dashboard'))
+const FoodPartnerLogin = lazy(() => import('../HomePageComponent/auth/PartnerLogin'));
+const PartnerDashboard = lazy(() => import('../pages/admin/PartnerDashboard'));
+const PartnerProtectedRoute = lazy(() => import('./PartnerProtectedRoute'));
 
 function AppRoutes() {
   return (
@@ -27,6 +30,10 @@ function AppRoutes() {
       <Route path="/partner-notice" element={<PartnerNotice />} />
       <Route path="/dashboard" element={<ProtectedRoute />}>
         <Route index element={<Dashboard />} />
+      </Route>
+      <Route path="/food-partner-login" element={<FoodPartnerLogin />} />
+      <Route path="/partner-dashboard" element={<PartnerProtectedRoute />}>
+        <Route index element={<PartnerDashboard />} />
       </Route>
  </Routes>
 </Suspense>
