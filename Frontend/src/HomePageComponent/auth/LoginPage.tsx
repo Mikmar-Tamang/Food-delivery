@@ -95,6 +95,19 @@ const handleResendVerification = async () => {
             Login
           </button>
 
+          <p className="text-center text-sm text-gray-600">
+            Don't have an account?{" "}
+            <b onClick={() => navigate('/user-register')} className="text-blue-500 hover:underline">
+              Sign up
+            </b>
+          </p>
+            
+          <p className="text-center text-sm text-gray-600">
+            Login as Food Partner{" "}
+            <b onClick={() => navigate('/food-partner-login')} className="text-blue-500 hover:underline">
+              here
+            </b>
+          </p>
         </form>
       </div>
     </div>

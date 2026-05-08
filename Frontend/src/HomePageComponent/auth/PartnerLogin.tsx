@@ -103,6 +103,8 @@ const FoodPartnerLogin = () => {
           >
             Register here
           </button>
+
+          <p>Login as normal user <b onClick={() => navigate('/login')}>here</b></p>
         </p>
       </div>
     </div>

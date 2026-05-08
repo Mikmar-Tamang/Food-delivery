@@ -172,7 +172,7 @@ const PartnerDashboard = () => {
             {partner.status === "PENDING" && (
               <div className="mt-6 bg-yellow-50 border-l-4 border-yellow-400 p-4">
                 <div className="flex">
-                  <div className="flex-shrink-0">
+                  <div className="shrink-0">
                     <span className="text-yellow-400">⚠️</span>
                   </div>
                   <div className="ml-3">
