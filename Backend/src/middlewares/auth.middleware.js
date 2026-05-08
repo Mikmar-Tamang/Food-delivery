@@ -32,6 +32,10 @@ const foodPartnerId = async (req, res, next) => {
     return res.status(401).json({ message: "Food partner not found" });
   }
 
+  if (foodPartner.isBanned){
+    return res.status(403).json({ message: "Food partner is banned" });
+  }
+
   req.foodPartner = foodPartner;
   next();
 };
@@ -51,6 +55,10 @@ const userId = async (req, res, next) => {
 
   if (!user) {
     return res.status(401).json({ message: "User not found" });
+  }
+
+  if (user.isBanned){
+    return res.status(403).json({ message: "User is banned" });
   }
 
   req.user = user;
