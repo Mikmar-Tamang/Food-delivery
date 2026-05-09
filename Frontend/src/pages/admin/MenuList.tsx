@@ -11,11 +11,17 @@ interface FoodItem {
   foodPartner: string;
 }
 
+interface FoodReference {
+  _id: string;
+  name: string;
+  price: number;
+}
+
 interface Discount {
   _id: string;
   discount: string;
   discountTime: string;
-  food: string;
+  food: string | FoodReference;  // Can be either string ID or populated object
 }
 
 interface DiscountsResponse {
@@ -70,25 +76,30 @@ const MyMenuList = () => {
     }
   };
 
-  const fetchMyDiscounts = async (): Promise<void> => {
-    try {
-      const response = await axios.get<DiscountsResponse>(
-        `${import.meta.env.VITE_API_URL}/api/food-discount/my-discounts`,
-        { withCredentials: true }
-      );
+ const fetchMyDiscounts = async (): Promise<void> => {
+  try {
+    const response = await axios.get<DiscountsResponse>(
+      `${import.meta.env.VITE_API_URL}/api/food-discount/my-discounts`,
+      { withCredentials: true }
+    );
+    
+    const discountsArray = response.data.discounts || [];
+    const discountsMap: { [key: string]: Discount } = {};
+    
+    discountsArray.forEach((discount: Discount) => {
+      // Extract food ID properly
+      const foodId = typeof discount.food === 'string' 
+        ? discount.food 
+        : discount.food._id;
       
-      const discountsArray = response.data.discounts || [];
-      const discountsMap: { [key: string]: Discount } = {};
-      
-      discountsArray.forEach((discount: Discount) => {
-        discountsMap[discount.food] = discount;
-      });
-      
-      setDiscounts(discountsMap);
-    } catch (error) {
-      console.error("Error fetching discounts:", error);
-    }
-  };
+      discountsMap[foodId] = discount;
+    });
+    
+    setDiscounts(discountsMap);
+  } catch (error) {
+    console.error("Error fetching discounts:", error);
+  }
+};
 
   const calculateDiscountedPrice = (originalPrice: number, discountPercent: string): string => {
     const discount = parseFloat(discountPercent);
