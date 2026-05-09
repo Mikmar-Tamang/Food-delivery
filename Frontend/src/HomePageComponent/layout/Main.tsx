@@ -152,7 +152,7 @@ function Main() {
                   className="bg-white rounded-2xl p-3 shadow-md flex flex-col h-full"
                 >
                   {/* Fixed height image container */}
-                  <div className="w-full h-48 rounded-2xl overflow-hidden bg-gray-100">
+                  <div className="w-full h-56 rounded-2xl overflow-hidden bg-gray-100">
                     <img
                       src={item.image?.url}
                       className="w-full h-full object-cover"
