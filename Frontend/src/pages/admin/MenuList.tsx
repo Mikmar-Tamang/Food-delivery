@@ -18,13 +18,12 @@ interface Discount {
   food: string;
 }
 
-interface DiscountsResponse {
-  success: boolean;
-  discounts: Discount[];
+interface FoodsResponse {
+  food: FoodItem[];
 }
 
-interface FoodResponse {
-  food: FoodItem[];
+interface DiscountsResponse {
+  discounts: Discount[];
 }
 
 interface AddDiscountResponse {
@@ -58,7 +57,7 @@ const MyMenuList = () => {
 
   const fetchMyFoods = async (): Promise<void> => {
     try {
-      const response = await axios.get<FoodResponse>(
+      const response = await axios.get<FoodsResponse>(
         `${import.meta.env.VITE_API_URL}/api/food/my-foods`,
         { withCredentials: true }
       );
@@ -76,6 +75,7 @@ const MyMenuList = () => {
         `${import.meta.env.VITE_API_URL}/api/food-discount/my-discounts`,
         { withCredentials: true }
       );
+      
       const discountsMap: { [key: string]: Discount } = {};
       response.data.discounts.forEach((discount: Discount) => {
         discountsMap[discount.food] = discount;
@@ -86,10 +86,10 @@ const MyMenuList = () => {
     }
   };
 
-  const calculateDiscountedPrice = (originalPrice: number, discountPercent: string): string => {
+  const calculateDiscountedPrice = (originalPrice: number, discountPercent: string): number => {
     const discount = parseFloat(discountPercent);
     const discountedPrice = originalPrice - (originalPrice * discount / 100);
-    return discountedPrice.toFixed(2);
+    return Math.round(discountedPrice * 100) / 100;
   };
 
   const handleAddDiscount = async (): Promise<void> => {
@@ -121,7 +121,8 @@ const MyMenuList = () => {
       setSelectedFood(null);
       setDiscountAmount("");
       setDiscountTime("");
-      fetchMyDiscounts();
+      
+      await fetchMyDiscounts();
     } catch (error: unknown) {
       const err = error as ErrorResponse;
       alert(err.response?.data?.message || "Failed to add discount");
@@ -140,7 +141,7 @@ const MyMenuList = () => {
       );
       
       alert("Discount removed successfully!");
-      fetchMyDiscounts();
+      await fetchMyDiscounts();
       setSelectedFood(null);
     } catch (error: unknown) {
       const err = error as ErrorResponse;
@@ -191,15 +192,21 @@ const MyMenuList = () => {
                 <div className="mt-2">
                   {discount ? (
                     <div className="flex items-center gap-2">
-                      <span className="text-green-600 font-bold">₨ {discountedPrice}</span>
-                      <span className="text-gray-400 line-through text-sm">₨ {food.price}</span>
+                      <span className="text-green-600 font-bold">
+                        ₨ {discountedPrice}
+                      </span>
+                      <span className="text-gray-400 line-through text-sm">
+                        ₨ {food.price}
+                      </span>
                     </div>
                   ) : (
                     <span className="text-green-600 font-bold">₨ {food.price}</span>
                   )}
                 </div>
                 {discount && discount.discountTime && (
-                  <p className="text-xs text-orange-500 mt-1">⏱️ {discount.discountTime}</p>
+                  <p className="text-xs text-orange-500 mt-1">
+                    ⏱️ {discount.discountTime}
+                  </p>
                 )}
               </div>
             </div>
@@ -265,7 +272,9 @@ const MyMenuList = () => {
               </div>
             ) : (
               <div className="mt-3 p-3 bg-gray-50 rounded-lg">
-                <p className="text-gray-600 mb-2">Current Price: <strong>₨ {selectedFood.price}</strong></p>
+                <p className="text-gray-600 mb-2">
+                  Current Price: <strong>₨ {selectedFood.price}</strong>
+                </p>
                 
                 <div className="mt-3">
                   <label className="block text-sm font-medium text-gray-700 mb-1">

@@ -19,26 +19,24 @@ import "swiper/css/navigation";
 import { FoodDiscountType } from "../../types/foodDiscount";
 import { addToCart } from "../../api/cart";
 
-
 function Main() {
   const [food, setFood] = useState<FoodType[]>([]);
   const [foodDiscount, setFoodDiscount] = useState<FoodDiscountType[]>([]);
   const [selectedFood, setSelectedFood] = useState<FoodType | null>(null);
   const [qty, setQty] = useState(1);
   const [loading, setLoading] = useState(false);
-  
 
   useEffect(() => {
     const fetchFood = async () => {
       try {
         const res = await axios.get(
           import.meta.env.VITE_API_URL + "/api/food",
-          { withCredentials: true }
+          { withCredentials: true },
         );
 
         const res1 = await axios.get(
           import.meta.env.VITE_API_URL + "/api/food-discount/discount",
-          { withCredentials: true }
+          { withCredentials: true },
         );
 
         setFoodDiscount(res1.data.viewFoodDiscount || []);
@@ -52,29 +50,28 @@ function Main() {
   }, []);
 
   useEffect(() => {
-  if (selectedFood) {
-    setQty(1);
-  }
-}, [selectedFood]);
+    if (selectedFood) {
+      setQty(1);
+    }
+  }, [selectedFood]);
 
-useEffect(() => {
-  if (selectedFood) {
-    document.body.style.overflow = "hidden";
-  } else {
-    document.body.style.overflow = "auto";
-  }
+  useEffect(() => {
+    if (selectedFood) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
 
-  // cleanup (important safety)
-  return () => {
-    document.body.style.overflow = "auto";
-  };
-}, [selectedFood]);
+    // cleanup (important safety)
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [selectedFood]);
 
-const totalPrice = selectedFood ? Number(selectedFood.price) * qty : 0;
+  const totalPrice = selectedFood ? Number(selectedFood.price) * qty : 0;
 
   return (
     <main className="flex flex-col gap-10">
-
       {/* ================= PART 1 FLASH DEALS ================= */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-4 md:px-6 lg:px-10">
         <img className="w-full" src={flashDeal} alt="" />
@@ -104,7 +101,6 @@ const totalPrice = selectedFood ? Number(selectedFood.price) * qty : 0;
         </h1>
 
         <div className="relative w-full flex items-center">
-
           {/* LEFT BUTTON */}
           <div className="prev-btn1 hidden md:block absolute -left-4 top-1/2 -translate-y-1/2 z-20 cursor-pointer">
             <img src={leftArrow} className="w-12 md:w-16" alt="prev" />
@@ -127,7 +123,7 @@ const totalPrice = selectedFood ? Number(selectedFood.price) * qty : 0;
           >
             {food.map((item) => (
               <SwiperSlide key={item._id}>
-                <div onClick={() => setSelectedFood(item)} className="bg-white rounded-2xl p-3 shadow-md">
+                {/* <div onClick={() => setSelectedFood(item)} className="bg-white rounded-2xl p-3 shadow-md">
                   <img
                     src={item.image?.url}
                     className="w-full rounded-2xl"
@@ -150,6 +146,42 @@ const totalPrice = selectedFood ? Number(selectedFood.price) * qty : 0;
                   className="bg-[#F17228] rounded-lg text-white text-sm h-10 w-full mt-2">
                     Order Now
                   </button>
+                </div> */}
+                <div
+                  onClick={() => setSelectedFood(item)}
+                  className="bg-white rounded-2xl p-3 shadow-md flex flex-col h-full"
+                >
+                  {/* Fixed height image container */}
+                  <div className="w-full h-48 rounded-2xl overflow-hidden bg-gray-100">
+                    <img
+                      src={item.image?.url}
+                      className="w-full h-full object-cover"
+                      alt={item.name}
+                    />
+                  </div>
+
+                  <p className="font-bold text-lg md:text-xl mt-2 line-clamp-1">
+                    {item.name}
+                  </p>
+
+                  <div className="flex items-center gap-2 mt-1">
+                    <img src={locationLogo} className="w-3 h-3" alt="" />
+                    <p className="text-[#FFB30E] text-sm truncate">
+                      {item.foodPartner?.restaurantAddress || "Nepal"}
+                    </p>
+                  </div>
+
+                  <p className="font-bold mt-1">${item.price}</p>
+
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedFood(item);
+                    }}
+                    className="bg-[#F17228] rounded-lg text-white text-sm h-10 w-full mt-2 hover:bg-[#E05A10] transition"
+                  >
+                    Order Now
+                  </button>
                 </div>
               </SwiperSlide>
             ))}
@@ -161,63 +193,73 @@ const totalPrice = selectedFood ? Number(selectedFood.price) * qty : 0;
           </div>
         </div>
         {selectedFood && (
-  <div
-    className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50"
-    onClick={() => setSelectedFood(null)}
-  >
-    {/* Card */}
-    <div
-      className="bg-white rounded-xl p-6 w-87.5 relative"
-      onClick={(e) => e.stopPropagation()} // ❗ prevents closing when clicking inside
-    >
-      {/* Close button */}
-      <button
-        className="absolute top-2 right-2 text-xl"
-        onClick={() => setSelectedFood(null)}
-      >
-        ✖
-      </button>
+          <div
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50"
+            onClick={() => setSelectedFood(null)}
+          >
+            {/* Card */}
+            <div
+              className="bg-white rounded-xl p-6 w-87.5 relative"
+              onClick={(e) => e.stopPropagation()} // ❗ prevents closing when clicking inside
+            >
+              {/* Close button */}
+              <button
+                className="absolute top-2 right-2 text-xl"
+                onClick={() => setSelectedFood(null)}
+              >
+                ✖
+              </button>
 
-      {/* Image */}
-      <img
-        src={selectedFood.image?.url}
-        className="w-full h-40 object-cover rounded-lg mb-4"
-      />
+              {/* Image */}
+              <img
+                src={selectedFood.image?.url}
+                className="w-full h-40 object-cover rounded-lg mb-4"
+              />
 
-      {/* Name */}
-      <h2 className="text-xl font-bold">{selectedFood.name}</h2>
+              {/* Name */}
+              <h2 className="text-xl font-bold">{selectedFood.name}</h2>
 
-      {/* Price */}
-      <p className="text-gray-600 mb-4">Rs {totalPrice.toFixed(2)}</p>
+              {/* Price */}
+              <p className="text-gray-600 mb-4">Rs {totalPrice.toFixed(2)}</p>
 
-      {/* Quantity */}
-      <div className="flex items-center gap-4 mb-4">
-        <button className="bg-gray-300 px-3" onClick={() => setQty(Math.max(1, qty - 1))}>
-          -
-        </button>
-        <span>{qty}</span>
-        <button className="bg-gray-300 px-3" onClick={() => setQty(qty + 1)}>
-          +
-        </button>
-      </div>
+              {/* Quantity */}
+              <div className="flex items-center gap-4 mb-4">
+                <button
+                  className="bg-gray-300 px-3"
+                  onClick={() => setQty(Math.max(1, qty - 1))}
+                >
+                  -
+                </button>
+                <span>{qty}</span>
+                <button
+                  className="bg-gray-300 px-3"
+                  onClick={() => setQty(qty + 1)}
+                >
+                  +
+                </button>
+              </div>
 
-      {/* Add to cart */}
-      <button  onClick={async () => {
-  try {
-    setLoading(true);
-    await addToCart(selectedFood._id, qty);
-    setSelectedFood(null);
-  } catch (err) {
-    console.log(err);
-  } finally {
-    setLoading(false); // ✅ ALWAYS runs
-  }
-  }} disabled={loading} className="bg-amber-500 text-white w-full py-2 rounded">
-        {loading ? "Adding..." : "Add to Basket"}
-      </button>
-    </div>
-  </div>
-)}
+              {/* Add to cart */}
+              <button
+                onClick={async () => {
+                  try {
+                    setLoading(true);
+                    await addToCart(selectedFood._id, qty);
+                    setSelectedFood(null);
+                  } catch (err) {
+                    console.log(err);
+                  } finally {
+                    setLoading(false); // ✅ ALWAYS runs
+                  }
+                }}
+                disabled={loading}
+                className="bg-amber-500 text-white w-full py-2 rounded"
+              >
+                {loading ? "Adding..." : "Add to Basket"}
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* ================= PART 4 FEATURED RESTAURANTS ================= */}
@@ -227,7 +269,6 @@ const totalPrice = selectedFood ? Number(selectedFood.price) * qty : 0;
         </h1>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
-
           {foodDiscount.map((disItem) => (
             <div
               key={disItem._id}
@@ -275,7 +316,6 @@ const totalPrice = selectedFood ? Number(selectedFood.price) * qty : 0;
 
       {/* ================= PART 5 SEARCH FOOD ================= */}
       <div className="bg-[#FEFAF1] px-4 md:px-6 lg:px-10 py-10">
-
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 font-bold">
           <h1 className="text-xl md:text-2xl">Search By Food</h1>
 
@@ -319,15 +359,14 @@ const totalPrice = selectedFood ? Number(selectedFood.price) * qty : 0;
               </SwiperSlide>
             ))
           ) : (
-              <div className="w-full flex justify-center items-center py-10">
-                <p className="text-xl md:text-3xl text-center font-bold text-yellow-500">
-                  Waiting For Food Items...
-                </p>
-              </div>
+            <div className="w-full flex justify-center items-center py-10">
+              <p className="text-xl md:text-3xl text-center font-bold text-yellow-500">
+                Waiting For Food Items...
+              </p>
+            </div>
           )}
         </Swiper>
       </div>
-
     </main>
   );
 }
