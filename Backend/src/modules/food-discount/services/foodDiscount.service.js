@@ -1,6 +1,7 @@
 import foodDiscount from '../models/food-discount.js';
-import cloudinaryStorage from '../../../services/cloudinary.service.js';
-import { v4 as uuid } from 'uuid';
+// import cloudinaryStorage from '../../../services/cloudinary.service.js';
+// import { v4 as uuid } from 'uuid';
+import FoodModel from '../../food/models/food.model.js';
 
 const createFoodDiscount = async (foodId, discount, discountTime, foodPartnerId) => {
 
