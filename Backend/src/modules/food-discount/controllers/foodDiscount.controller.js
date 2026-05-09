@@ -37,4 +37,37 @@ const foodDiscountView = async (req, res) => {
     }
 };
 
-export default { createFoodDiscount, foodDiscountView };
+const getPartnerDiscounts = async (req, res) => {
+    try {
+        const discounts = await foodDiscountService.getPartnerDiscounts(req.foodPartner._id);
+        res.status(200).json({
+            success: true,
+            message: "Your discounts fetched successfully",
+            discounts: discounts
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        });
+    }
+};
+
+const deleteFoodDiscount = async (req, res) => {
+    try {
+        const result = await foodDiscountService.deleteFoodDiscount(
+            req.params.discountId,
+            req.foodPartner._id
+        );
+        res.status(200).json({
+            success: true,
+            message: result.message
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
+
+export default { createFoodDiscount, foodDiscountView, getPartnerDiscounts, deleteFoodDiscount };

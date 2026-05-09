@@ -37,7 +37,22 @@ const getAllFood = async (req, res) => {
     }
 };
 
+const getPartnerFood = async (req, res) => {
+    try {
+        const foodItems = await foodService.getPartnerFood(req.foodPartner._id);
+        res.status(200).json({
+            success: true,
+            message: "Your food items fetched successfully",
+            food: foodItems
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
 export default {
   createFood,
-  getAllFood
+  getAllFood,
+  getPartnerFood
 };

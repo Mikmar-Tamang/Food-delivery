@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import MyMenuList from "./MenuList";
+import AddFood from "./AddFood";
 
 // Types
 interface FoodPartner {
@@ -200,21 +202,18 @@ const PartnerDashboard = () => {
         {activeTab === "menu" && (
           <div>
             <h1 className="text-2xl font-bold mb-6">My Menu Items</h1>
-            <div className="bg-white rounded-lg shadow p-6">
-              <p className="text-gray-600 text-center py-8">
-                Your food items will appear here.
-              </p>
-            </div>
+            <MyMenuList />
           </div>
         )}
 
-        {activeTab === "add-food" && (
+         {activeTab === "add-food" && (
           <div>
             <h1 className="text-2xl font-bold mb-6">Add New Food Item</h1>
             <div className="bg-white rounded-lg shadow p-6 max-w-2xl">
-              <p className="text-gray-600 text-center py-8">
-                Food item form will appear here.
-              </p>
+              <AddFood onSuccess={() => {
+                // Optional: refresh menu when new item is added
+                console.log("Food item added!");
+              }} />
             </div>
           </div>
         )}

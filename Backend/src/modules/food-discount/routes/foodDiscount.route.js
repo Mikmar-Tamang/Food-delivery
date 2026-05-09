@@ -10,4 +10,8 @@ router.post('/discount',authMiddleware.foodPartnerId , foodDiscountController.cr
 // get /api/food-discount/discount
 router.get('/discount', authMiddleware.userId, foodDiscountController.foodDiscountView)
 
+router.get('/my-discounts', authMiddleware.foodPartnerId, foodDiscountController.getPartnerDiscounts);
+
+router.delete('/discount/:discountId', authMiddleware.foodPartnerId, foodDiscountController.deleteFoodDiscount);
+
 export default router;

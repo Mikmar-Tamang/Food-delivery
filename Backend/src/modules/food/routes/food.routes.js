@@ -15,5 +15,7 @@ router.post('/', authMiddleware.foodPartnerId, upload.single('image'), foodContr
 // get /api/food [protected]  food view for customers
 router.get('/', authMiddleware.userId, foodController.getAllFood)
 
+router.get('/my-food', authMiddleware.foodPartnerId, foodController.getPartnerFood);
+
 
 export default router;

@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
 
+
 const HomePage = lazy(() => import('../pages/HomePage'))
 const LoginPage= lazy(() => import('../HomePageComponent/auth/LoginPage'))
 const UserForm= lazy(() => import('../HomePageComponent/auth/UserForm'))

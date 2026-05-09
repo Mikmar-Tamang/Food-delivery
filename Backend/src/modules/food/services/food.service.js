@@ -32,4 +32,9 @@ const getAllFood = async () => {
     return foodItems;
 };
 
-export default { createFood, getAllFood };
+const getPartnerFood = async (foodPartnerId) => {
+    const foodItems = await FoodModel.find({ foodPartner: foodPartnerId });
+    return foodItems;
+};
+
+export default { createFood, getAllFood, getPartnerFood };
