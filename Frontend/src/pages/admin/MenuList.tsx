@@ -1,6 +1,6 @@
 // frontend/src/components/partner/MyMenuList.tsx
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 interface FoodItem {
   _id: string;
@@ -18,12 +18,15 @@ interface Discount {
   food: string;
 }
 
-interface FoodsResponse {
-  food: FoodItem[];
+interface DiscountsResponse {
+  success: boolean;
+  message: string;
+  discounts: Discount[];
 }
 
-interface DiscountsResponse {
-  discounts: Discount[];
+interface FoodsResponse {
+  success?: boolean;
+  food: FoodItem[];
 }
 
 interface AddDiscountResponse {
@@ -32,12 +35,7 @@ interface AddDiscountResponse {
   discount: Discount;
 }
 
-interface ErrorResponse {
-  response?: {
-    data?: {
-      message?: string;
-    };
-  };
+interface ErrorResponseData {
   message?: string;
 }
 
@@ -51,9 +49,14 @@ const MyMenuList = () => {
   const [addingDiscount, setAddingDiscount] = useState<boolean>(false);
 
   useEffect(() => {
-    fetchMyFoods();
-    fetchMyDiscounts();
+    fetchData();
   }, []);
+
+  const fetchData = async (): Promise<void> => {
+    setLoading(true);
+    await Promise.all([fetchMyFoods(), fetchMyDiscounts()]);
+    setLoading(false);
+  };
 
   const fetchMyFoods = async (): Promise<void> => {
     try {
@@ -61,11 +64,9 @@ const MyMenuList = () => {
         `${import.meta.env.VITE_API_URL}/api/food/my-foods`,
         { withCredentials: true }
       );
-      setFoods(response.data.food);
+      setFoods(response.data.food || []);
     } catch (error) {
       console.error("Error fetching foods:", error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -76,20 +77,23 @@ const MyMenuList = () => {
         { withCredentials: true }
       );
       
+      const discountsArray = response.data.discounts || [];
       const discountsMap: { [key: string]: Discount } = {};
-      response.data.discounts.forEach((discount: Discount) => {
+      
+      discountsArray.forEach((discount: Discount) => {
         discountsMap[discount.food] = discount;
       });
+      
       setDiscounts(discountsMap);
     } catch (error) {
       console.error("Error fetching discounts:", error);
     }
   };
 
-  const calculateDiscountedPrice = (originalPrice: number, discountPercent: string): number => {
+  const calculateDiscountedPrice = (originalPrice: number, discountPercent: string): string => {
     const discount = parseFloat(discountPercent);
     const discountedPrice = originalPrice - (originalPrice * discount / 100);
-    return Math.round(discountedPrice * 100) / 100;
+    return discountedPrice.toFixed(2);
   };
 
   const handleAddDiscount = async (): Promise<void> => {
@@ -121,11 +125,11 @@ const MyMenuList = () => {
       setSelectedFood(null);
       setDiscountAmount("");
       setDiscountTime("");
-      
       await fetchMyDiscounts();
     } catch (error: unknown) {
-      const err = error as ErrorResponse;
-      alert(err.response?.data?.message || "Failed to add discount");
+      const axiosError = error as AxiosError<ErrorResponseData>;
+      const errorMessage = axiosError.response?.data?.message || "Failed to add discount";
+      alert(errorMessage);
     } finally {
       setAddingDiscount(false);
     }
@@ -144,8 +148,9 @@ const MyMenuList = () => {
       await fetchMyDiscounts();
       setSelectedFood(null);
     } catch (error: unknown) {
-      const err = error as ErrorResponse;
-      alert(err.response?.data?.message || "Failed to remove discount");
+      const axiosError = error as AxiosError<ErrorResponseData>;
+      const errorMessage = axiosError.response?.data?.message || "Failed to remove discount";
+      alert(errorMessage);
     }
   };
 
@@ -166,43 +171,48 @@ const MyMenuList = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {foods.map((food) => {
           const discount = discounts[food._id];
-          const discountedPrice = discount ? calculateDiscountedPrice(food.price, discount.discount) : null;
           
           return (
             <div
               key={food._id}
               onClick={() => setSelectedFood(food)}
-              className="bg-white rounded-lg shadow overflow-hidden cursor-pointer hover:shadow-lg transition"
+              className="bg-white rounded-lg shadow overflow-hidden cursor-pointer hover:shadow-lg transition flex flex-col h-full"
             >
-              <img
-                src={food.image.url}
-                alt={food.name}
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-4">
+              <div className="w-full h-48 overflow-hidden bg-gray-100">
+                <img
+                  src={food.image.url}
+                  alt={food.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              
+              <div className="p-4 flex flex-col flex-1">
                 <div className="flex justify-between items-start">
-                  <h3 className="font-bold text-lg">{food.name}</h3>
+                  <h3 className="font-bold text-lg line-clamp-1">{food.name}</h3>
                   {discount && (
-                    <span className="bg-red-500 text-white text-xs px-2 py-1 rounded">
+                    <span className="bg-red-500 text-white text-xs px-2 py-1 rounded whitespace-nowrap ml-2">
                       {discount.discount}% OFF
                     </span>
                   )}
                 </div>
+                
                 <p className="text-gray-600 text-sm mt-1 line-clamp-2">{food.description}</p>
+                
                 <div className="mt-2">
                   {discount ? (
                     <div className="flex items-center gap-2">
-                      <span className="text-green-600 font-bold">
-                        ₨ {discountedPrice}
+                      <span className="text-green-600 font-bold text-lg">
+                        ₨ {calculateDiscountedPrice(food.price, discount.discount)}
                       </span>
                       <span className="text-gray-400 line-through text-sm">
                         ₨ {food.price}
                       </span>
                     </div>
                   ) : (
-                    <span className="text-green-600 font-bold">₨ {food.price}</span>
+                    <span className="text-green-600 font-bold text-lg">₨ {food.price}</span>
                   )}
                 </div>
+                
                 {discount && discount.discountTime && (
                   <p className="text-xs text-orange-500 mt-1">
                     ⏱️ {discount.discountTime}
@@ -225,7 +235,7 @@ const MyMenuList = () => {
             onClick={(e) => e.stopPropagation()}
           >
             <button
-              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-xl"
               onClick={() => setSelectedFood(null)}
             >
               ✖
@@ -242,73 +252,52 @@ const MyMenuList = () => {
 
             {discounts[selectedFood._id] ? (
               <div className="mt-3 p-3 bg-green-50 rounded-lg">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-gray-600">Discounted Price</p>
-                    <p className="text-2xl font-bold text-green-600">
-                      ₨ {calculateDiscountedPrice(selectedFood.price, discounts[selectedFood._id].discount)}
-                    </p>
-                    <p className="text-sm text-gray-400 line-through">
-                      Original: ₨ {selectedFood.price}
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm">
-                      {discounts[selectedFood._id].discount}% OFF
-                    </span>
-                    {discounts[selectedFood._id].discountTime && (
-                      <p className="text-xs text-orange-500 mt-1">
-                        ⏱️ {discounts[selectedFood._id].discountTime}
-                      </p>
-                    )}
-                  </div>
-                </div>
+                <p className="text-sm text-gray-600">Discounted Price</p>
+                <p className="text-2xl font-bold text-green-600">
+                  ₨ {calculateDiscountedPrice(selectedFood.price, discounts[selectedFood._id].discount)}
+                </p>
+                <p className="text-sm text-gray-400 line-through">
+                  Original: ₨ {selectedFood.price}
+                </p>
+                <p className="text-xs text-orange-500 mt-1">
+                  ⏱️ {discounts[selectedFood._id].discountTime}
+                </p>
                 <button
                   onClick={() => handleRemoveDiscount(discounts[selectedFood._id]._id)}
-                  className="mt-3 w-full bg-red-500 text-white py-2 rounded hover:bg-red-600 text-sm"
+                  className="mt-3 w-full bg-red-500 text-white py-2 rounded hover:bg-red-600"
                 >
                   Remove Discount
                 </button>
               </div>
             ) : (
               <div className="mt-3 p-3 bg-gray-50 rounded-lg">
-                <p className="text-gray-600 mb-2">
-                  Current Price: <strong>₨ {selectedFood.price}</strong>
-                </p>
+                <p className="mb-2">Current Price: <strong>₨ {selectedFood.price}</strong></p>
                 
-                <div className="mt-3">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Add Discount (%)
-                  </label>
-                  <input
-                    type="number"
-                    value={discountAmount}
-                    onChange={(e) => setDiscountAmount(e.target.value)}
-                    placeholder="e.g., 20"
-                    className="w-full p-2 border rounded mb-2"
-                    min="0"
-                    max="100"
-                  />
-                  
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Discount Time / Offer Name (Optional)
-                  </label>
-                  <input
-                    type="text"
-                    value={discountTime}
-                    onChange={(e) => setDiscountTime(e.target.value)}
-                    placeholder="e.g., Happy Hour, Weekend Special"
-                    className="w-full p-2 border rounded mb-3"
-                  />
-                  
-                  <button
-                    onClick={handleAddDiscount}
-                    disabled={addingDiscount}
-                    className="w-full bg-orange-500 text-white py-2 rounded hover:bg-orange-600 disabled:opacity-50"
-                  >
-                    {addingDiscount ? "Adding..." : "Add Discount"}
-                  </button>
-                </div>
+                <label className="block text-sm text-gray-600 mb-1">Discount %</label>
+                <input
+                  type="number"
+                  value={discountAmount}
+                  onChange={(e) => setDiscountAmount(e.target.value)}
+                  placeholder="e.g., 20"
+                  className="w-full p-2 border rounded mb-2"
+                />
+                
+                <label className="block text-sm text-gray-600 mb-1">Offer Name (Optional)</label>
+                <input
+                  type="text"
+                  value={discountTime}
+                  onChange={(e) => setDiscountTime(e.target.value)}
+                  placeholder="Weekend Special, Happy Hour, etc."
+                  className="w-full p-2 border rounded mb-3"
+                />
+                
+                <button
+                  onClick={handleAddDiscount}
+                  disabled={addingDiscount}
+                  className="w-full bg-orange-500 text-white py-2 rounded hover:bg-orange-600 disabled:opacity-50"
+                >
+                  {addingDiscount ? "Adding..." : "Add Discount"}
+                </button>
               </div>
             )}
           </div>
