@@ -15,8 +15,5 @@ router.patch('/partner/orders/:orderId/ready', authMiddleware.foodPartnerId, ord
 router.patch('/partner/orders/:orderId/delivered', authMiddleware.foodPartnerId, orderController.markOrderDelivered);
 router.get('/partner/stats', authMiddleware.foodPartnerId, orderController.getOrderStats);
 
-console.log('Order routes loaded');
-console.log('authMiddleware.userId type:', typeof authMiddleware.userId);
-console.log('orderController.createOrder type:', typeof orderController.createOrder);
 
 export default router;

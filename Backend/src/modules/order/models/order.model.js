@@ -60,7 +60,7 @@ const orderSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 // Generate order number before saving
-orderSchema.pre('save', async function(next) {
+orderSchema.pre('save',function(next) {
   if (!this.orderNumber) {
     const date = new Date();
     const year = date.getFullYear();
