@@ -4,7 +4,9 @@ import orderController from '../controllers/order.controller.js';
 import authMiddleware from '../../../middlewares/auth.middleware.js';
 
 // User routes (protected by userId middleware)
+console.log("✅ ORDER ROUTES LOADED - checkout route registered");
 router.post('/checkout', authMiddleware.userId, orderController.createOrder);
+console.log("Checkout route: POST /api/orders/checkout");
 
 // Partner routes (protected by foodPartnerId middleware)
 router.get('/partner/orders', authMiddleware.foodPartnerId, orderController.getPartnerOrders);

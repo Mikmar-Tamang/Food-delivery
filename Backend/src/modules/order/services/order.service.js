@@ -6,18 +6,31 @@ import FoodPartner from '../../food-partner/food-partner.model.js';
 
 // Create order from basket
 const createOrder = async (userId, deliveryDetails) => {
+     console.log("1️⃣ createOrder started");
+
+     console.log("2️⃣ About to find basket");
   // Get user's basket
   const basket = await Basket.findOne({ userId }).populate('items.foodId');
+   console.log("3️⃣ Basket found:", basket ? "Yes" : "No");
   
   if (!basket || basket.items.length === 0) {
     throw new Error("Basket is empty");
   }
 
+   console.log("4️⃣ Basket has items:", basket.items.length);
+
+   console.log("5️⃣ About to find user");
+
   // Get user details
   const user = await User.findById(userId);
+
+  console.log("6️⃣ User found:", user ? user.username : "No");
   if (!user) {
     throw new Error("User not found");
   }
+
+    console.log("7️⃣ Starting to process items");
+
 
   // Process items and calculate totals
   const items = [];
@@ -53,6 +66,8 @@ const createOrder = async (userId, deliveryDetails) => {
   const deliveryFee = 50;
   const totalAmount = subtotal + deliveryFee;
 
+    console.log("8️⃣ About to call Order.create");
+
   // Create order
   const order = await Order.create({
     user: {
@@ -79,6 +94,7 @@ const createOrder = async (userId, deliveryDetails) => {
     },
     status: "pending"
   });
+  console.log("9️⃣ Order.create completed");
 
   // Clear the basket
   await Basket.findOneAndDelete({ userId });
