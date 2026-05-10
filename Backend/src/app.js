@@ -11,7 +11,6 @@ import foodDiscount from './modules/food-discount/routes/foodDiscount.route.js';
 import adminRoutes from './modules/admin/routes/admin.route.js';
 import foodPartnerRoutes from './modules/food-partner/routes/partner.route.js';
 import orderRoutes from './modules/order/routes/order.route.js';
-console.log("Order routes imported successfully");
 
 app.use(cors({
   origin:[

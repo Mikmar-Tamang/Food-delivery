@@ -67,12 +67,14 @@ const createOrder = async (userId, deliveryDetails) => {
   const totalAmount = subtotal + deliveryFee;
 
     console.log("8️⃣ About to call Order.create");
+    const orderNumber = `ORD-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
 
   // Create order
   const order = await Order.create({
+    orderNumber,
     user: {
       id: userId,
-      name: user.username,
+      name: user.username,  
       email: user.email,
       phone: deliveryDetails.phone
     },
