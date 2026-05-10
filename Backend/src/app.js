@@ -10,6 +10,7 @@ import cartRoutes from './modules/cart/routes/cart.routes.js';
 import foodDiscount from './modules/food-discount/routes/foodDiscount.route.js';
 import adminRoutes from './modules/admin/routes/admin.route.js';
 import foodPartnerRoutes from './modules/food-partner/routes/partner.route.js';
+import orderRoutes from './modules/order/routes/order.route.js';
 
 app.use(cors({
   origin:[
@@ -44,5 +45,6 @@ app.use('/api/cart', cartRoutes);
 app.use('/api/food-discount', foodDiscount);
 app.use('/api/admin', adminRoutes);
 app.use('/api/food-partner', foodPartnerRoutes);
+app.use('/api/orders', orderRoutes);
 
 export default app;

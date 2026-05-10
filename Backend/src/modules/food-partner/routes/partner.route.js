@@ -2,6 +2,7 @@
 import express from 'express';
 import authMiddleware from '../../../middlewares/auth.middleware.js';
 import FoodPartner from '../food-partner.model.js';
+import orderController from '../../order/controllers/order.controller.js';
 
 const router = express.Router();
 
@@ -142,5 +143,8 @@ router.post('/menu', async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
+// Replace the placeholder /stats endpoint with:
+router.get('/stats', orderController.getOrderStats);
 
 export default router;
