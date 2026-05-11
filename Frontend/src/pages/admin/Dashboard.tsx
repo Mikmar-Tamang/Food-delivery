@@ -12,21 +12,13 @@ const Dashboard = () => {
   const [partners, setPartners] = useState<Partner[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedPartner, setSelectedPartner] = useState<Partner | null>(null);
-  const [placeOrders, setPlaceOrders] = useState(false);
-
-  const handlePlaceOrders = () => {
-    setPlaceOrders(true);
-  };
 
   const [open, setOpen] = useState(true);
   const [active, setActive] = useState("profile");
 
-
   const [basket, setBasket] = useState<Basket | null>(null);
 
   const navigate = useNavigate();
-
-
 
   useEffect(() => {
   const fetchPartners = async () => {
@@ -251,20 +243,11 @@ const menuItems = {
       <p>No items in basket</p>
     )}
 
-    <button onClick={handlePlaceOrders} className="bg-green-600 text-white px-4 py-2 rounded mt-4">
+    <button className="bg-green-600 text-white px-4 py-2 rounded mt-4">
       Place Order
     </button>
   </div>
         )}
-        {placeOrders && (
-          <div className="bg-white p-6 rounded shadow mt-4">
-            <button onClick={() => setPlaceOrders(false)} className="absolute top-2 right-2 bg-red-500 text-white px-3 py-1 rounded">
-              X
-            </button>
-            <h2 className="text-xl font-bold mb-4">Place Your Order</h2>
-            <p>Order placement functionality coming soon!</p>
-          </div>
-         )}
 
         {/* ORDERS */}
         {active === "orders" && (
