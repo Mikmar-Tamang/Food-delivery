@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { User, Partner } from "../../types/user.ts";
 import { getAllUsers, banUser, getAllPartners, banPartner, approvePartner, rejectPartner} from "../../services/admin.service.ts";
 import Basket from "./Basket.tsx";
+import UserOrders from "./userOrders.tsx";
 
 const Dashboard = () => {
 
@@ -224,27 +225,7 @@ const menuItems = {
         {active === "basket" && <Basket />}
 
         {/* ORDERS */}
-        {active === "orders" && (
-          <div>
-            <h1 className="text-2xl font-bold mb-4">Orders</h1>
-
-            {/* Current */}
-            <div className="mb-6">
-              <h2 className="font-semibold mb-2">Current Orders</h2>
-              <div className="bg-white p-4 rounded shadow">
-                🍔 Burger - On the way 🚚
-              </div>
-            </div>
-
-            {/* Previous */}
-            <div>
-              <h2 className="font-semibold mb-2">Previous Orders</h2>
-              <div className="bg-white p-4 rounded shadow">
-                🍕 Pizza - Delivered ✅
-              </div>
-            </div>
-          </div>
-        )}
+        {active === "orders" && <UserOrders />}
 
         {/* ADMIN DASHBOARD */}
        {user?.role === "ADMIN" && active === "dashboard" && (
