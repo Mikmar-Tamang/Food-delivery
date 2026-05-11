@@ -83,6 +83,10 @@ const UserOrders = () => {
     return new Date(dateString).toLocaleString();
   };
 
+  const formatPrice = (price: number): string => {
+  return price.toFixed(2);
+};
+
   if (loading) {
     return (
       <div className="flex justify-center items-center py-12">
@@ -160,7 +164,7 @@ const UserOrders = () => {
                   </p>
                 </div>
                 <p className="font-bold text-orange-600 text-lg">
-                  ₨ {order.totalAmount}
+                  ₨ {formatPrice(order.totalAmount)}
                 </p>
               </div>
             </div>
@@ -282,7 +286,7 @@ const UserOrders = () => {
                         <p className="font-medium">{item.name}</p>
                         <p className="text-sm text-gray-500">Quantity: {item.quantity}</p>
                       </div>
-                      <p className="font-semibold">₨ {item.price * item.quantity}</p>
+                      <p className="font-semibold">₨ {formatPrice(item.price * item.quantity)}</p>
                     </div>
                   ))}
                 </div>
@@ -292,7 +296,7 @@ const UserOrders = () => {
               <div className="border-t pt-4">
                 <div className="flex justify-between mb-2">
                   <span className="text-gray-600">Subtotal</span>
-                  <span>₨ {selectedOrder.totalAmount - 50}</span>
+                  <span>₨ {formatPrice(selectedOrder.totalAmount - 50)}</span>
                 </div>
                 <div className="flex justify-between mb-2">
                   <span className="text-gray-600">Delivery Fee</span>
@@ -300,7 +304,7 @@ const UserOrders = () => {
                 </div>
                 <div className="flex justify-between font-bold text-lg border-t pt-2">
                   <span>Total</span>
-                  <span className="text-orange-600">₨ {selectedOrder.totalAmount}</span>
+                  <span className="text-orange-600">₨ {formatPrice(selectedOrder.totalAmount)}</span>
                 </div>
               </div>
             </div>
