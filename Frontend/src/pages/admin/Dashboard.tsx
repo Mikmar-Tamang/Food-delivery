@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { User, Partner } from "../../types/user.ts";
 import { getAllUsers, banUser, getAllPartners, banPartner, approvePartner, rejectPartner} from "../../services/admin.service.ts";
 import Basket from "./Basket.tsx";
-import UserOrders from "./userOrders.tsx";
+import UserOrders from "./UserOrders.tsx";
 
 const Dashboard = () => {
 
