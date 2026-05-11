@@ -5,6 +5,8 @@ import authMiddleware from '../../../middlewares/auth.middleware.js';
 
 // User routes (protected by userId middleware)
 router.post('/checkout', authMiddleware.userId, orderController.createOrder);
+// Add this route for user orders
+router.get('/user/orders', authMiddleware.userId, orderController.getUserOrders);
 
 // Partner routes (protected by foodPartnerId middleware)
 router.get('/partner/orders', authMiddleware.foodPartnerId, orderController.getPartnerOrders);

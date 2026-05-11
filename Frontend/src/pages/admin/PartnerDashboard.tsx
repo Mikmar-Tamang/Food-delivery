@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import MyMenuList from "./MenuList";
 import AddFood from "./AddFood";
+import PartnerOrders from "./PartnerOrders";
 
 // Types
 interface FoodPartner {
@@ -189,14 +190,7 @@ const PartnerDashboard = () => {
         )}
 
         {activeTab === "orders" && (
-          <div>
-            <h1 className="text-2xl font-bold mb-6">Orders Management</h1>
-            <div className="bg-white rounded-lg shadow p-6">
-              <p className="text-gray-600 text-center py-8">
-                Order management will appear here once you create the order system.
-              </p>
-            </div>
-          </div>
+          <PartnerOrders />
         )}
 
         {activeTab === "menu" && (

@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Basket } from "../../types/baseket";
+// import { Basket } from "../../types/baseket";
 import { User, Partner } from "../../types/user.ts";
 import { getAllUsers, banUser, getAllPartners, banPartner, approvePartner, rejectPartner} from "../../services/admin.service.ts";
+import Basket from "./Basket.tsx";
 
 const Dashboard = () => {
 
@@ -16,7 +17,7 @@ const Dashboard = () => {
   const [open, setOpen] = useState(true);
   const [active, setActive] = useState("profile");
 
-  const [basket, setBasket] = useState<Basket | null>(null);
+  // const [basket, setBasket] = useState<Basket | null>(null);
 
   const navigate = useNavigate();
 
@@ -127,22 +128,22 @@ const handleBan = async (id: string) => {
     }
   };
 
-  useEffect(() => {
-  const fetchBasket = async () => {
-    try {
-      const res = await axios.get(
-        import.meta.env.VITE_API_URL + "/api/cart",
-        { withCredentials: true }
-      );
+//   useEffect(() => {
+//   const fetchBasket = async () => {
+//     try {
+//       const res = await axios.get(
+//         import.meta.env.VITE_API_URL + "/api/cart",
+//         { withCredentials: true }
+//       );
 
-      setBasket(res.data.basket);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+//       setBasket(res.data.basket);
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   };
 
-  fetchBasket();
-}, []);
+//   fetchBasket();
+// }, []);
 
 const menuItems = {
   USER: ["profile", "orders", "basket"],
@@ -220,34 +221,7 @@ const menuItems = {
         )}
 
         {/* BASKET */}
-        {active === "basket" && (
-          <div>
-    <h1 className="text-2xl font-bold mb-4">Basket</h1>
-
-    {basket && basket.items?.length > 0 ? (
-      basket.items.map((item) => (
-        <div
-          key={item._id}
-          className="bg-white p-4 rounded shadow mb-3 flex justify-between"
-        >
-          <div>
-            🍔 {item.foodId?.name || "Food"} 
-          </div>
-
-          <div>
-            Qty: {item.quantity}
-          </div>
-        </div>
-      ))
-    ) : (
-      <p>No items in basket</p>
-    )}
-
-    <button className="bg-green-600 text-white px-4 py-2 rounded mt-4">
-      Place Order
-    </button>
-  </div>
-        )}
+        {active === "basket" && <Basket />}
 
         {/* ORDERS */}
         {active === "orders" && (
