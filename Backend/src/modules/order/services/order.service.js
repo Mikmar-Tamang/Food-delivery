@@ -3,6 +3,7 @@ import Basket from '../../cart/models/baseket.js';
 import FoodModel from '../../food/models/food.model.js';
 import User from '../../user/user.model.js';
 import FoodPartner from '../../food-partner/food-partner.model.js';
+import { get } from 'mongoose';
 
 // Create order from basket
 const createOrder = async (userId, deliveryDetails) => {
@@ -240,6 +241,12 @@ const getOrderStats = async (partnerId) => {
   };
 };
 
+const getUserOrders = async (userId) => {
+  const orders = await Order.find({ 'user.id': userId })
+    .sort({ createdAt: -1 });
+  return orders;
+};
+
 export default {
   createOrder,
   getPartnerOrders,
@@ -248,5 +255,6 @@ export default {
   rejectOrder,
   markOrderReady,
   markOrderDelivered,
-  getOrderStats
+  getOrderStats,
+  getUserOrders
 };

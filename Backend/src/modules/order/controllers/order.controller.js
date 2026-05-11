@@ -181,10 +181,30 @@ const getOrderStats = async (req, res) => {
   }
 };
 
+// Get user's own orders (order history)
+const getUserOrders = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    
+    const orders = await orderService.getUserOrders(userId);
+    
+    res.status(200).json({
+      success: true,
+      orders: orders
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
 export default {
   createOrder,
   getPartnerOrders,
   getOrderDetails,
+  getUserOrders,
   acceptOrder,
   rejectOrder,
   markOrderReady,
