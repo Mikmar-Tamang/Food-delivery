@@ -8,7 +8,7 @@ import multer from 'multer';
 router.post('/discount',authMiddleware.foodPartnerId , foodDiscountController.createFoodDiscount)
 
 // get /api/food-discount/discount
-router.get('/discount', authMiddleware.userId, foodDiscountController.foodDiscountView)
+router.get('/discount', foodDiscountController.foodDiscountView)
 
 router.get('/my-discounts', authMiddleware.foodPartnerId, foodDiscountController.getPartnerDiscounts);
 

@@ -30,13 +30,11 @@ function Main() {
     const fetchFood = async () => {
       try {
         const res = await axios.get(
-          import.meta.env.VITE_API_URL + "/api/food",
-          { withCredentials: true },
+          import.meta.env.VITE_API_URL + "/api/food"
         );
 
         const res1 = await axios.get(
-          import.meta.env.VITE_API_URL + "/api/food-discount/discount",
-          { withCredentials: true },
+          import.meta.env.VITE_API_URL + "/api/food-discount/discount"
         );
 
         setFoodDiscount(res1.data.viewFoodDiscount || []);
@@ -60,6 +58,7 @@ function Main() {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "auto";
+      alert('first login or register to add item to cart');
     }
 
     // cleanup (important safety)
