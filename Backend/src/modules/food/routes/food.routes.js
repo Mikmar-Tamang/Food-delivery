@@ -13,7 +13,7 @@ const upload = multer({
 router.post('/', authMiddleware.foodPartnerId, upload.single('image'), foodController.createFood);
 
 // get /api/food [protected]  food view for customers
-router.get('/', authMiddleware.userId, foodController.getAllFood)
+router.get('/', foodController.getAllFood);
 
 router.get('/my-foods', authMiddleware.foodPartnerId, foodController.getPartnerFood);
 
