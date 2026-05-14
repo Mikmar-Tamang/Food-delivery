@@ -62,46 +62,48 @@ const Checkout = ({ isOpen, onClose, onSuccess, selectedItems, subtotal }: Check
   };
 
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
-    e.preventDefault();
-    
-    if (!deliveryDetails.street || !deliveryDetails.city || !deliveryDetails.area || !deliveryDetails.phone) {
-      alert("Please fill all required fields");
-      return;
-    }
+  e.preventDefault();
+  
+  if (!deliveryDetails.street || !deliveryDetails.city || !deliveryDetails.area || !deliveryDetails.phone) {
+    alert("Please fill all required fields");
+    return;
+  }
 
-    if (selectedItems.length === 0) {
-      alert("Please select items to checkout");
-      return;
-    }
+  if (selectedItems.length === 0) {
+    alert("Please select items to checkout");
+    return;
+  }
 
-    setSubmitting(true);
+  setSubmitting(true);
+  
+  try {
+    // ✅ Prepare selected items for backend
+    const itemsForBackend = selectedItems.map(item => ({
+      foodId: item.foodId._id,
+      quantity: item.quantity
+    }));
     
-    try {
-      // Send selected items to backend
-      const response = await axios.post<OrderResponse>(
-        `${import.meta.env.VITE_API_URL}/api/orders/checkout`,
-        { 
-          deliveryDetails,
-          selectedItems: selectedItems.map(item => ({
-            foodId: item.foodId._id,
-            quantity: item.quantity
-          }))
-        },
-        { withCredentials: true }
-      );
-      
-      if (response.data.success) {
-        alert(`✅ Order placed successfully!\nOrder #: ${response.data.order.orderNumber}\nTotal: ₨ ${response.data.order.totalAmount}`);
-        onSuccess();
-        onClose();
-      }
-    } catch (error: unknown) {
-      const axiosError = error as AxiosError<ErrorResponse>;
-      alert(axiosError.response?.data?.message || "Failed to place order");
-    } finally {
-      setSubmitting(false);
+    const response = await axios.post<OrderResponse>(
+      `${import.meta.env.VITE_API_URL}/api/orders/checkout`,
+      { 
+        deliveryDetails,
+        selectedItems: itemsForBackend  // ✅ Send selected items
+      },
+      { withCredentials: true }
+    );
+    
+    if (response.data.success) {
+      alert(`✅ Order placed successfully!\nOrder #: ${response.data.order.orderNumber}\nTotal: ₨ ${response.data.order.totalAmount}`);
+      onSuccess();
+      onClose();
     }
-  };
+  } catch (error: unknown) {
+    const axiosError = error as AxiosError<ErrorResponse>;
+    alert(axiosError.response?.data?.message || "Failed to place order");
+  } finally {
+    setSubmitting(false);
+  }
+};
 
   if (!isOpen) return null;
 

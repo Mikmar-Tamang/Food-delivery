@@ -2,19 +2,15 @@ import orderService from "../services/order.service.js";
 
 // User creates order from basket
 const createOrder = async (req, res) => {
-      console.log("✅ createOrder function STARTED"); // Debug
-  console.log("req.user:", req.user); // Debug
-
+  console.log("✅ createOrder function STARTED");
+  
   try {
-     console.log("📦 Getting deliveryDetails from body");
-    const { deliveryDetails } = req.body;
-    console.log("deliveryDetails:", deliveryDetails);
+    const { deliveryDetails, selectedItems } = req.body;  // ✅ Add selectedItems
     const userId = req.user._id;
-     console.log("userId:", userId);
     
-     console.log("🏗️ Calling orderService.createOrder...");
-    const order = await orderService.createOrder(userId, deliveryDetails);
-     console.log("✅ Order created successfully:", order.orderNumber);
+    console.log("Selected items:", selectedItems);
+    
+    const order = await orderService.createOrder(userId, deliveryDetails, selectedItems);
     
     res.status(201).json({
       success: true,
@@ -22,8 +18,7 @@ const createOrder = async (req, res) => {
       order: order
     });
   } catch (error) {
-     console.log("❌ Error in createOrder:", error.message);
-    console.log("Full error:", error);
+    console.log("❌ Error in createOrder:", error.message);
     res.status(400).json({
       success: false,
       message: error.message

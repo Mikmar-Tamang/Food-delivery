@@ -5,42 +5,34 @@ import User from '../../user/user.model.js';
 import FoodPartner from '../../food-partner/food-partner.model.js';
 import { get } from 'mongoose';
 
-// Create order from basket
-const createOrder = async (userId, deliveryDetails) => {
-     console.log("1️⃣ createOrder started");
-
-     console.log("2️⃣ About to find basket");
-  // Get user's basket
-  const basket = await Basket.findOne({ userId }).populate('items.foodId');
-   console.log("3️⃣ Basket found:", basket ? "Yes" : "No");
+// Create order from selected items (not entire basket)
+const createOrder = async (userId, deliveryDetails, selectedItems) => {
+  console.log("1️⃣ createOrder started");
+  console.log("Selected items:", selectedItems);
   
-  if (!basket || basket.items.length === 0) {
-    throw new Error("Basket is empty");
+  if (!selectedItems || selectedItems.length === 0) {
+    throw new Error("No items selected");
   }
-
-   console.log("4️⃣ Basket has items:", basket.items.length);
-
-   console.log("5️⃣ About to find user");
 
   // Get user details
   const user = await User.findById(userId);
-
-  console.log("6️⃣ User found:", user ? user.username : "No");
   if (!user) {
     throw new Error("User not found");
   }
 
-    console.log("7️⃣ Starting to process items");
-
-
-  // Process items and calculate totals
+  // Process selected items
   const items = [];
   let subtotal = 0;
   let partnerId = null;
   let restaurantName = "";
 
-  for (const item of basket.items) {
-    const food = item.foodId;
+  for (const selectedItem of selectedItems) {
+    // Get full food details from database
+    const food = await FoodModel.findById(selectedItem.foodId);
+    
+    if (!food) {
+      throw new Error(`Food item not found: ${selectedItem.foodId}`);
+    }
     
     // Get partner info from first item
     if (!partnerId) {
@@ -58,24 +50,24 @@ const createOrder = async (userId, deliveryDetails) => {
       foodId: food._id,
       name: food.name,
       price: food.price,
-      quantity: item.quantity
+      quantity: selectedItem.quantity
     });
     
-    subtotal += food.price * item.quantity;
+    subtotal += food.price * selectedItem.quantity;
   }
 
   const deliveryFee = 50;
   const totalAmount = subtotal + deliveryFee;
 
-    console.log("8️⃣ About to call Order.create");
-    const orderNumber = `ORD-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
+  // Create order number
+  const orderNumber = `ORD-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
 
   // Create order
   const order = await Order.create({
     orderNumber,
     user: {
       id: userId,
-      name: user.username,  
+      name: user.username,
       email: user.email,
       phone: deliveryDetails.phone
     },
@@ -97,10 +89,18 @@ const createOrder = async (userId, deliveryDetails) => {
     },
     status: "pending"
   });
-  console.log("9️⃣ Order.create completed");
 
-  // Clear the basket
-  await Basket.findOneAndDelete({ userId });
+  // ✅ IMPORTANT: Remove ONLY the selected items from basket
+  const basket = await Basket.findOne({ userId });
+  if (basket) {
+    // Remove selected items from basket
+    basket.items = basket.items.filter(
+      (item) => !selectedItems.some(
+        (selected) => selected.foodId === item.foodId.toString()
+      )
+    );
+    await basket.save();
+  }
 
   return order;
 };
