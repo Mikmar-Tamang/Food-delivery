@@ -10,7 +10,6 @@ import { v4 as uuid } from "uuid";
 const userRegister = async (body) => {
   try {
     const { username, password } = body;
-    console.log(password);
 const email = body.email.trim().toLowerCase();
 
     const existingUser = await User.findOne({ email });
