@@ -12,12 +12,12 @@ interface AddFoodFormData {
   image: FileList;
 }
 
-// ✅ The CORRECT way: Type the mixed() file field properly
+//  Type the mixed() file field properly
 const schema: yup.ObjectSchema<AddFoodFormData> = yup.object({
   name: yup.string().required("Food name is required"),
   price: yup.number().positive("Price must be positive").required("Price is required"),
   description: yup.string().required("Description is required"),
-  image: yup.mixed<FileList>().required("Image is required"), // 👈 Key fix: Use mixed<FileList>()
+  image: yup.mixed<FileList>().required("Image is required"), // Key fix: Use mixed<FileList>()
 });
 
 const AddFood= ({ onSuccess }: { onSuccess: () => void }) => {
