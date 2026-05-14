@@ -7,48 +7,109 @@ import crypto from "crypto";
 import cloudinaryService from "../../../services/cloudinary.service.js";
 import { v4 as uuid } from "uuid";
 
+// const userRegister = async (body) => {
+//   try {
+//     const { username, password } = body;
+// const email = body.email.trim().toLowerCase();
+
+//     const existingUser = await User.findOne({ email });
+
+//     // CASE 1: User already exists
+//     if (existingUser) {
+//       // If verified → block
+//       if (existingUser.isVerified) {
+//        throw new Error("User already exists");
+//       }
+
+//       // If NOT verified → update & resend
+//       const verificationToken = crypto.randomBytes(32).toString("hex");
+
+//       existingUser.username = username;
+//       existingUser.password = await bcrypt.hash(password, 10);
+//       existingUser.verificationToken = verificationToken;
+//       existingUser.verificationExpires = Date.now() + 1000 * 60 * 60;
+
+//       await existingUser.save();
+
+//       const verifyLink = `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}`;
+
+//       await sendEmail(
+//         email,
+//         "Verify your account",
+//         `<h2>Welcome ${username}</h2>
+//          <p>Click below to verify your email:</p>
+//          <a href="${verifyLink}">Verify Email</a>`
+//       );
+
+//       return { message: "Verification email resent" };
+//     }
+
+//     // CASE 2: NEW USER → CREATE HERE
+//     const hash = await bcrypt.hash(password, 10);
+//     const verificationToken = crypto.randomBytes(32).toString("hex");
+
+//     await User.create({
+//       username,
+//       email,
+//       password: hash,
+//       verificationToken,
+//       verificationExpires: Date.now() + 1000 * 60 * 60,
+//       isVerified: false,
+//     });
+
+//     // const verifyLink = `${process.env.FRONTEND_URL}/api/auth/user/verify-email?token=${verificationToken}`;
+//     const verifyLink = `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}`;
+
+//     await sendEmail(
+//       email,
+//       "Verify your account",
+//       `<h2>Welcome ${username}</h2>
+//        <p>Click below to verify your email:</p>
+//        <a href="${verifyLink}">Verify Email</a>`
+//     );
+
+//     return { message: "Check your email to verify account" };
+
+//   } catch (err) {
+//     if (err.code === 11000) {
+//       throw new Error("User already exists");
+//     }
+//     throw new Error(err.message);
+//   }
+// };
+
 const userRegister = async (body) => {
   try {
     const { username, password } = body;
-const email = body.email.trim().toLowerCase();
+    const email = body.email.trim().toLowerCase();
 
     const existingUser = await User.findOne({ email });
 
     // CASE 1: User already exists
     if (existingUser) {
-      // If verified → block
       if (existingUser.isVerified) {
-       throw new Error("User already exists");
+        throw new Error("User already exists");
       }
 
-      // If NOT verified → update & resend
+      // Resend verification
       const verificationToken = crypto.randomBytes(32).toString("hex");
-
       existingUser.username = username;
       existingUser.password = await bcrypt.hash(password, 10);
       existingUser.verificationToken = verificationToken;
       existingUser.verificationExpires = Date.now() + 1000 * 60 * 60;
-
       await existingUser.save();
 
       const verifyLink = `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}`;
+      await sendEmail(email, "Verify your account", `<h2>Welcome ${username}</h2><p>Click below to verify your email:</p><a href="${verifyLink}">Verify Email</a>`);
 
-      await sendEmail(
-        email,
-        "Verify your account",
-        `<h2>Welcome ${username}</h2>
-         <p>Click below to verify your email:</p>
-         <a href="${verifyLink}">Verify Email</a>`
-      );
-
-      return { message: "Verification email resent" };
+      return { success: true, message: "Verification email resent", email: email };
     }
 
-    // CASE 2: NEW USER → CREATE HERE
+    // CASE 2: NEW USER
     const hash = await bcrypt.hash(password, 10);
     const verificationToken = crypto.randomBytes(32).toString("hex");
 
-    await User.create({
+    const newUser = await User.create({
       username,
       email,
       password: hash,
@@ -57,19 +118,10 @@ const email = body.email.trim().toLowerCase();
       isVerified: false,
     });
 
-    // const verifyLink = `${process.env.FRONTEND_URL}/api/auth/user/verify-email?token=${verificationToken}`;
     const verifyLink = `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}`;
+    await sendEmail(email, "Verify your account", `<h2>Welcome ${username}</h2><p>Click below to verify your email:</p><a href="${verifyLink}">Verify Email</a>`);
 
-    await sendEmail(
-      email,
-      "Verify your account",
-      `<h2>Welcome ${username}</h2>
-       <p>Click below to verify your email:</p>
-       <a href="${verifyLink}">Verify Email</a>`
-    );
-
-    return { message: "Check your email to verify account" };
-
+    return { success: true, message: "Check your email to verify account", email: email, userId: newUser._id };
   } catch (err) {
     if (err.code === 11000) {
       throw new Error("User already exists");

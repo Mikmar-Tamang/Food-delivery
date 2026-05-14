@@ -77,14 +77,30 @@ import authService from '../services/auth.service.js';
 
 // VERIFY EMAIL + AUTO LOGIN
 
-const RegisterUser = async (req, res)=> {
+// const RegisterUser = async (req, res)=> {
+//   try {
+//     const createUser= await authService.userRegister(req.body);
+//     res.status(201).json({ message: "User registered successfully", user: createUser });
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// }
+
+const RegisterUser = async (req, res) => {
   try {
-    const createUser= await authService.userRegister(req.body);
-    res.status(201).json({ message: "User registered successfully", user: createUser });
+    const result = await authService.userRegister(req.body);
+    res.status(201).json({ 
+      success: true, 
+      message: result.message,
+      email: result.email 
+    });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(400).json({ 
+      success: false, 
+      error: error.message 
+    });
   }
-}
+};
 
 const userVerifyEmail = async (req, res) => {
   try {

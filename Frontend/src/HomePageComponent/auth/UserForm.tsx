@@ -13,7 +13,7 @@ const schema: yup.ObjectSchema<RegisterForm> = yup.object({
 
 const UserForm = () => {
   const navigate = useNavigate();
-
+  
   const {
     register,
     handleSubmit,
