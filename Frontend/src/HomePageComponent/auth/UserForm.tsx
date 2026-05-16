@@ -28,7 +28,9 @@ const UserForm = () => {
     });
 
     localStorage.setItem("email", data.email);
-    navigate("/verify-notice");
+    setTimeout(() => {
+      navigate("/verify-notice");
+    }, 100);
   };
 
   return (
