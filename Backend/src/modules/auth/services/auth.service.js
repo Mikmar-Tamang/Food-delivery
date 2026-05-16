@@ -100,7 +100,7 @@ const userRegister = async (body) => {
       await existingUser.save();
 
       const verifyLink = `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}`;
-      await sendEmail(email, "Verify your account", `<h2>Welcome ${username}</h2><p>Click below to verify your email:</p><a href="${verifyLink}">Verify Email</a>`);
+      sendEmail(email, "Verify your account", `<h2>Welcome ${username}</h2><p>Click below to verify your email:</p><a href="${verifyLink}">Verify Email</a>`);
 
       return { success: true, message: "Verification email resent", email: email };
     }
@@ -119,8 +119,9 @@ const userRegister = async (body) => {
     });
 
     const verifyLink = `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}`;
-    await sendEmail(email, "Verify your account", `<h2>Welcome ${username}</h2><p>Click below to verify your email:</p><a href="${verifyLink}">Verify Email</a>`);
-
+    sendEmail(email, "Verify your account", `<h2>Welcome ${username}</h2><p>Click below to verify your email:</p><a href="${verifyLink}">Verify Email</a>`);
+     
+    
     return { success: true, message: "Check your email to verify account", email: email, userId: newUser._id };
   } catch (err) {
     if (err.code === 11000) {

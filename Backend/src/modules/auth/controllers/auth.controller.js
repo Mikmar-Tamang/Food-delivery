@@ -95,6 +95,7 @@ const RegisterUser = async (req, res) => {
       email: result.email 
     });
   } catch (error) {
+    console.error('registration error:', error);
     res.status(400).json({ 
       success: false, 
       error: error.message 
