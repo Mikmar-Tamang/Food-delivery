@@ -37,13 +37,13 @@ function Nav() {
   };
 
   return (
-    <div className="bg-white flex flex-col md:flex-row items-center justify-between px-4 md:px-10 py-3 gap-3">
+    <div className="bg-white lg:ml-40 flex flex-col md:flex-row px-4 lg:gap-24 lg:px-10 md:px-10 py-3 gap-3">
 
       {/* LOGO */}
-      <img src={logo} alt="logo" className="w-40 md:w-60" />
+      <img src={logo} alt="logo" className="w-60 md:w-64" />
 
       {/* LOCATION */}
-      <div className="flex items-center gap-2 text-sm md:text-base text-center md:text-left">
+      <div className=" flex items-center gap-2 text-[12px] md:text-base text-center md:text-left">
         <p className="font-bold">Deliver to:</p>
         <img src={locationLogo} className="w-4 h-4" />
         <p>
@@ -52,7 +52,7 @@ function Nav() {
       </div>
 
       {/* RIGHT SIDE */}
-      <div className="flex flex-col md:flex-row items-center gap-3">
+      <div className=" flex  md:flex-row items-center gap-3">
 
         {/* SEARCH */}
         <input

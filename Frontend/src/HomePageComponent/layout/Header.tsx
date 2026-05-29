@@ -1,14 +1,10 @@
 import Nav from "./Nav";
-// import tap1 from "../../assets/photo/Tab 1.png";
-// import tap2 from "../../assets/photo/Tab 2.png";
-// import ButtonOfSearch from "../../assets/photo/Button.png";
 import headerPic from "../../assets/photo/header pic.png";
 
 function Header() {
   return (
     <header>
       <Nav />
-
       <div className="bg-[#FACD2D] shadow-inner relative overflow-hidden px-4 md:px-10 lg:px-20 py-10">
         
         {/* TEXT SECTION */}
