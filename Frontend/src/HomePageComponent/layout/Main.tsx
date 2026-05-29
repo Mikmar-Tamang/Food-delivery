@@ -138,7 +138,7 @@ function Main() {
   return (
     <main className="flex flex-col gap-10">
       {/* ================= PART 1 FLASH DEALS ================= */}
-      <div className="grid grid-cols-1 lg:px-40 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-4 md:px-6 lg:px-10">
+      <div className="grid grid-cols-1 lg:px-40 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-4 md:px-6">
         <img className="w-full" src={flashDeal} alt="" />
         <img className="w-full" src={flashDeal1} alt="" />
         <img className="w-full" src={flashDeal2} alt="" />
@@ -160,7 +160,7 @@ function Main() {
       </div>
 
       {/* ================= PART 3 POPULAR ITEMS ================= */}
-      <div className="flex flex-col items-center gap-8 lg:px-40 px-4 md:px-6 lg:px-10">
+      <div className="flex flex-col items-center gap-8 lg:px-40 px-4 md:px-6">
         <h1 className="font-bold text-2xl md:text-4xl lg:text-5xl text-center">
           Popular items
         </h1>
