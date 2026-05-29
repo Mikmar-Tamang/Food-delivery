@@ -37,7 +37,7 @@ function Nav() {
   };
 
   return (
-    <div className="bg-white lg:ml-40 flex flex-col md:flex-row px-4 lg:gap-24 lg:px-10 md:px-10 py-3 gap-3">
+    <div className="bg-white lg:ml-28 flex flex-col md:flex-row px-4 lg:gap-36 md:px-10 py-3 gap-3">
 
       {/* LOGO */}
       <img src={logo} alt="logo" className="w-60 md:w-64" />
