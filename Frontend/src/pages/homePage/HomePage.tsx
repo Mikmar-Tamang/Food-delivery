@@ -1,6 +1,6 @@
-import Header from "../HomePageComponent/layout/Header"
-import Main from "../HomePageComponent/layout/Main"
-import Footer from "../HomePageComponent/layout/Footer"
+import Header from "./sections/Header"
+import Main from "./sections/Main"
+import Footer from "./sections/Footer"
 
 
 function HomePage() {

@@ -2,16 +2,16 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
 
 
-const HomePage = lazy(() => import('../pages/HomePage'))
-const LoginPage= lazy(() => import('../HomePageComponent/auth/LoginPage'))
-const UserForm= lazy(() => import('../HomePageComponent/auth/UserForm'))
-const PartnerForm= lazy(() => import('../HomePageComponent/auth/PartnerForm'))
-const VerifyNotice= lazy(() => import('../pages/auth/VerifyNotice'))
-const PartnerNotice= lazy(() => import('../pages/auth/PartnerNotice'))
-const VerifyEmail= lazy(() => import('../pages/auth/VerifyEmail'))
+const HomePage = lazy(() => import('../pages/homePage/HomePage'))
+const LoginPage= lazy(() => import('../pages/auth/LoginPage'))
+const UserForm= lazy(() => import('../pages/auth/UserForm'))
+const PartnerForm= lazy(() => import('../pages/auth/PartnerForm'))
+const VerifyNotice= lazy(() => import('../pages/authNoticePage/VerifyNotice'))
+const PartnerNotice= lazy(() => import('../pages/authNoticePage/PartnerNotice'))
+const VerifyEmail= lazy(() => import('../pages/authNoticePage/VerifyEmail'))
 const ProtectedRoute= lazy(() => import('./ProtectedRoute'))
 const Dashboard = lazy(() => import('../pages/admin/Dashboard'))
-const FoodPartnerLogin = lazy(() => import('../HomePageComponent/auth/PartnerLogin'));
+const FoodPartnerLogin = lazy(() => import('../pages/auth/PartnerLogin'));
 const PartnerDashboard = lazy(() => import('../pages/admin/PartnerDashboard'));
 const PartnerProtectedRoute = lazy(() => import('./PartnerProtectedRoute'));
 

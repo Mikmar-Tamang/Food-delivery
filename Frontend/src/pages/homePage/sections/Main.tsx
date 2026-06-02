@@ -11,13 +11,13 @@ import leftArrow from "../../assets/photo/Arrow Left.png";
 import rightArrow from "../../assets/photo/Arrow Right.png";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { FoodType } from "../../types/food";
+import { FoodType } from "../../../types/food";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
-import { FoodDiscountType } from "../../types/foodDiscount";
-import { addToCart } from "../../api/cart";
+import { FoodDiscountType } from "../../../types/foodDiscount";
+import { addToCart } from "../../../services/cart.service";
 import { useNavigate } from "react-router-dom";
 
 function Main() {
