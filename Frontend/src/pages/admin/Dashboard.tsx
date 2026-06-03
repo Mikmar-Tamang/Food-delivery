@@ -205,13 +205,11 @@ const menuItems = {
 
             <div className="bg-white p-6 rounded-xl shadow">
               <div className="mb-3">
-                <label>Name</label>
-                <input className="w-full border p-2 rounded mt-1" />
+               <p>{user?.username}</p>
               </div>
 
               <div className="mb-3">
-                <label>Email</label>
-                <input className="w-full border p-2 rounded mt-1" />
+                <p>{user?.email}</p>
               </div>
 
               <button className="bg-blue-600 text-white px-4 py-2 rounded">
