@@ -48,7 +48,7 @@ const SearchResults = () => {
     <div className="min-h-screen flex flex-col">
       <Nav />
       
-      <main className="flex-grow container mx-auto px-4 py-8">
+      <main className="grow container mx-auto px-4 py-8">
         <h1 className="text-2xl font-bold mb-2">
           Results for "{query}"
         </h1>

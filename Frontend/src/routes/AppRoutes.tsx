@@ -30,8 +30,8 @@ function AppRoutes() {
       <Route path="/verify-notice" element={<VerifyNotice />} />
       <Route path="/verify-email" element={<VerifyEmail />} />
       <Route path="/partner-notice" element={<PartnerNotice />} />
-      <Route path="/dashboard" element={<ProtectedRoute />}>
       <Route path="/search" element={<SearchResults />} />
+      <Route path="/dashboard" element={<ProtectedRoute />}>
         <Route index element={<Dashboard />} />
       </Route>
       <Route path="/food-partner-login" element={<FoodPartnerLogin />} />
