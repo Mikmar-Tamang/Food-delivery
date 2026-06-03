@@ -203,7 +203,7 @@ const menuItems = {
           <div className="flex flex-col gap-6 items-center justify-around">
             <h1 className="text-2xl font-bold mb-4">Profile</h1>
 
-            <div className="bg-white p-6 rounded-xl flex flex-col gap-4 justify-center items-center shadow">
+            <div className="bg-white p-6 rounded-xl flex flex-col gap-4 justify-center shadow">
               <div>
                <p><span className="font-bold">Username: </span>{user?.username}</p>
               </div>
