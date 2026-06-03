@@ -14,6 +14,7 @@ const Dashboard = lazy(() => import('../pages/admin/Dashboard'))
 const FoodPartnerLogin = lazy(() => import('../pages/auth/PartnerLogin'));
 const PartnerDashboard = lazy(() => import('../pages/admin/PartnerDashboard'));
 const PartnerProtectedRoute = lazy(() => import('./PartnerProtectedRoute'));
+const SearchResults = lazy(() => import('../pages/SearchResults'));
 
 function AppRoutes() {
   return (
@@ -30,6 +31,7 @@ function AppRoutes() {
       <Route path="/verify-email" element={<VerifyEmail />} />
       <Route path="/partner-notice" element={<PartnerNotice />} />
       <Route path="/dashboard" element={<ProtectedRoute />}>
+      <Route path="/search" element={<SearchResults />} />
         <Route index element={<Dashboard />} />
       </Route>
       <Route path="/food-partner-login" element={<FoodPartnerLogin />} />

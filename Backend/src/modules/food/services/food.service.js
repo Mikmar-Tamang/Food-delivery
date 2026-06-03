@@ -37,4 +37,16 @@ const getPartnerFood = async (foodPartnerId) => {
     return foodItems;
 };
 
-export default { createFood, getAllFood, getPartnerFood };
+const searchFoods = async (query) => {
+  const foods = await FoodModel.find({
+    name: { $regex: query, $options: "i" }
+  }).populate("foodPartner", "restaurantName restaurantAddress");
+  
+  return foods;
+};
+
+export default {
+  searchFoods
+};
+
+export default { createFood, getAllFood, getPartnerFood, searchFoods };

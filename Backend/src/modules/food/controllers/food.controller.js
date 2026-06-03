@@ -50,9 +50,37 @@ const getPartnerFood = async (req, res) => {
     }
 };
 
+export const searchFood = async (req, res) => {
+  try {
+    const { q } = req.query;
+
+    if (!q || q.trim() === "") {
+      return res.status(400).json({
+        success: false,
+        message: "Search query is required"
+      });
+    }
+
+    const foods = await foodService.searchFoods(q);
+
+    res.status(200).json({
+      success: true,
+      data: foods,
+      count: foods.length
+    });
+  } catch (error) {
+    console.error("Search error:", error);
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
 
 export default {
   createFood,
   getAllFood,
-  getPartnerFood
+  getPartnerFood,
+  searchFood
 };

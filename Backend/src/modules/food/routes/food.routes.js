@@ -17,5 +17,7 @@ router.get('/', foodController.getAllFood);
 
 router.get('/my-foods', authMiddleware.foodPartnerId, foodController.getPartnerFood);
 
+router.get('/search', foodController.searchFood);
+
 
 export default router;
