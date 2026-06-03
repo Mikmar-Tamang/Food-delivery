@@ -1,5 +1,5 @@
 import Nav from "./Nav";
-import headerPic from "../../assets/photo/header pic.png";
+import headerPic from "../../../assets/photo/header pic.png";
 
 function Header() {
   return (

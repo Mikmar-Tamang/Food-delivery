@@ -1,7 +1,7 @@
 
-import logo from "../../assets/photo/Logo.png";
-import user from "../../assets/photo/user.png";
-import locationLogo from "../../assets/photo/map-marker-alt.png";
+import logo from "../../../assets/photo/Logo.png";
+import user from "../../../assets/photo/user.png";
+import locationLogo from "../../../assets/photo/map-marker-alt.png";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
