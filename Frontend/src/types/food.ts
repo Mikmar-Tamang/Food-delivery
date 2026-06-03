@@ -10,5 +10,6 @@ export type FoodType = {
   foodPartner?: {
     _id: string;
   restaurantAddress: string;
+  restaurantName: string;
   };
 };
