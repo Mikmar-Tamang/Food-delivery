@@ -45,8 +45,4 @@ const searchFoods = async (query) => {
   return foods;
 };
 
-export default {
-  searchFoods
-};
-
 export default { createFood, getAllFood, getPartnerFood, searchFoods };
