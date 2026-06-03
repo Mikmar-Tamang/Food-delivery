@@ -20,9 +20,12 @@ interface FoodPartner {
 interface DashboardStats {
   totalOrders: number;
   pendingOrders: number;
-  completedOrders: number;
+  deliveredOrders: number; 
   totalRevenue: number;
   todayOrders: number;
+  acceptedOrders?: number;
+  readyOrders?: number;
+  rejectedOrders?: number;
 }
 
 const PartnerDashboard = () => {
@@ -32,7 +35,7 @@ const PartnerDashboard = () => {
   const [stats, setStats] = useState<DashboardStats>({
     totalOrders: 0,
     pendingOrders: 0,
-    completedOrders: 0,
+    deliveredOrders: 0,
     totalRevenue: 0,
     todayOrders: 0,
   });
@@ -162,8 +165,8 @@ const PartnerDashboard = () => {
                 <p className="text-3xl font-bold text-blue-600 mt-2">{stats.todayOrders}</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow">
-                <p className="text-gray-600 text-sm">Completed Orders</p>
-                <p className="text-3xl font-bold text-green-600 mt-2">{stats.completedOrders}</p>
+                <p className="text-gray-600 text-sm">Delivered Orders</p>
+                <p className="text-3xl font-bold text-green-600 mt-2">{stats.deliveredOrders}</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow">
                 <p className="text-gray-600 text-sm">Total Revenue</p>
