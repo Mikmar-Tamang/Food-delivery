@@ -182,9 +182,9 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="flex items-center justify-center min-h-screen bg-linear-to-br from-gray-50 to-gray-100">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 transform transition-all duration-300 hover:shadow-2xl">
-        <h2 className="text-3xl font-bold text-center mb-2 bg-gradient-to-r from-orange-500 to-yellow-500 bg-clip-text text-transparent">
+        <h2 className="text-3xl font-bold text-center mb-2 bg-linear-to-r from-orange-500 to-yellow-500 bg-clip-text text-transparent">
           Welcome Back
         </h2>
         <p className="text-center text-gray-500 mb-6">Login to continue ordering food</p>
@@ -241,7 +241,7 @@ const LoginPage = () => {
             className={`w-full py-3 rounded-lg font-semibold transition-all duration-300 transform ${
               isLoading
                 ? "bg-gray-400 cursor-not-allowed"
-                : "bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 hover:scale-[1.02] active:scale-[0.98] text-white shadow-md hover:shadow-lg"
+                : "bg-linear-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 hover:scale-[1.02] active:scale-[0.98] text-white shadow-md hover:shadow-lg"
             }`}
           >
             {isLoading ? (

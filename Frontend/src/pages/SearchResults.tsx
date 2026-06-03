@@ -119,7 +119,7 @@ const SearchResults = () => {
     return (
       <div className="min-h-screen flex flex-col">
         <Nav />
-        <div className="flex-grow flex justify-center items-center">
+        <div className="grow flex justify-center items-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-400"></div>
         </div>
       </div>
@@ -130,7 +130,7 @@ const SearchResults = () => {
     <div className="min-h-screen flex flex-col bg-gray-50">
       <Nav />
       
-      <main className="flex-grow container mx-auto px-4 py-8">
+      <main className="grow container mx-auto px-4 py-8">
         {/* Search Header */}
         <div className="mb-8">
           <h1 className="text-2xl font-bold text-gray-800">
