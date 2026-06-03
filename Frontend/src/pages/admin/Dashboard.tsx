@@ -200,16 +200,16 @@ const menuItems = {
 
         {/* PROFILE */}
         {active === "profile" && (
-          <div>
+          <div className="flex flex-col gap-6 items-center justify-around">
             <h1 className="text-2xl font-bold mb-4">Profile</h1>
 
-            <div className="bg-white p-6 rounded-xl shadow">
-              <div className="mb-3">
-               <p>{user?.username}</p>
+            <div className="bg-white p-6 rounded-xl flex flex-col gap-4 justify-center items-center shadow">
+              <div>
+               <p><span className="font-bold">Username: </span>{user?.username}</p>
               </div>
 
-              <div className="mb-3">
-                <p>{user?.email}</p>
+              <div>
+                <p><span className="font-bold">Email: </span>{user?.email}</p>
               </div>
 
               <button className="bg-blue-600 text-white px-4 py-2 rounded">
