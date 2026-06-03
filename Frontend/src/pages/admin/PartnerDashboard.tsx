@@ -61,7 +61,7 @@ const PartnerDashboard = () => {
   const fetchStats = async () => {
     try {
       const response = await axios.get<{ success: boolean; stats: DashboardStats }>(
-        `${import.meta.env.VITE_API_URL}/api/food-partner/stats`,
+        `${import.meta.env.VITE_API_URL}/api/orders/partner/stats`,
         { withCredentials: true }
       );
       setStats(response.data.stats);
