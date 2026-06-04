@@ -356,7 +356,7 @@ function Main() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 font-bold">
           <h1 className="text-xl md:text-2xl">Search By Food</h1>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center justify-between">
             <button className="prev-btn">
               <img src={leftArrow} className="w-12 md:w-16" alt="" />
             </button>
