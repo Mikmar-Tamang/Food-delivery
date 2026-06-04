@@ -161,7 +161,7 @@ function Nav() {
         </p>
       </div> 
       {/* LOGO - Make it clickable to go home */}
-      <div className="flex items-center lg:gap-22">
+      <div className="flex items-center lg:gap-22 justify-between">
       <img
         src={logo}
         alt="logo"
