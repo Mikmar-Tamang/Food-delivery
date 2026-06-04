@@ -357,7 +357,6 @@ function Main() {
           <h1 className="text-xl md:text-2xl">Search By Food</h1>
 
           <div className="flex items-center gap-2">
-            <button className="text-[#FFB30E]">View All</button>
             <button className="prev-btn">
               <img src={leftArrow} className="w-12 md:w-16" alt="" />
             </button>
