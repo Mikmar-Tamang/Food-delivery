@@ -10,9 +10,9 @@ const VerifyNotice= lazy(() => import('../pages/authNoticePage/VerifyNotice'))
 const PartnerNotice= lazy(() => import('../pages/authNoticePage/PartnerNotice'))
 const VerifyEmail= lazy(() => import('../pages/authNoticePage/VerifyEmail'))
 const ProtectedRoute= lazy(() => import('./ProtectedRoute'))
-const Dashboard = lazy(() => import('../pages/admin/Dashboard'))
+const Dashboard = lazy(() => import('../pages/admin/user/Dashboard'))
 const FoodPartnerLogin = lazy(() => import('../pages/auth/PartnerLogin'));
-const PartnerDashboard = lazy(() => import('../pages/admin/PartnerDashboard'));
+const PartnerDashboard = lazy(() => import('../pages/admin/partner/PartnerDashboard'));
 const PartnerProtectedRoute = lazy(() => import('./PartnerProtectedRoute'));
 const SearchResults = lazy(() => import('../pages/SearchResults'));
 

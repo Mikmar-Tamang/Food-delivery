@@ -2,9 +2,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import MyMenuList from "./MenuList";
-import AddFood from "./AddFood";
-import PartnerOrders from "./PartnerOrders";
+import MyMenuList from "../partner/MenuList";
+import AddFood from "../partner/AddFood";
+import PartnerOrders from "../partner/PartnerOrders";
 
 // Types
 interface FoodPartner {

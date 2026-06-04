@@ -77,7 +77,7 @@ const Checkout = ({ isOpen, onClose, onSuccess, selectedItems, subtotal }: Check
   setSubmitting(true);
   
   try {
-    // ✅ Prepare selected items for backend
+    //  Prepare selected items for backend
     const itemsForBackend = selectedItems.map(item => ({
       foodId: item.foodId._id,
       quantity: item.quantity
@@ -87,13 +87,13 @@ const Checkout = ({ isOpen, onClose, onSuccess, selectedItems, subtotal }: Check
       `${import.meta.env.VITE_API_URL}/api/orders/checkout`,
       { 
         deliveryDetails,
-        selectedItems: itemsForBackend  // ✅ Send selected items
+        selectedItems: itemsForBackend  // Send selected items
       },
       { withCredentials: true }
     );
     
     if (response.data.success) {
-      alert(`✅ Order placed successfully!\nOrder #: ${response.data.order.orderNumber}\nTotal: ₨ ${response.data.order.totalAmount}`);
+      alert(` Order placed successfully!\nOrder #: ${response.data.order.orderNumber}\nTotal: ₨ ${response.data.order.totalAmount}`);
       onSuccess();
       onClose();
     }

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Checkout from "./Checkout";
+import Checkout from "../partner/Checkout";
 
 interface BasketItem {
   _id: string;

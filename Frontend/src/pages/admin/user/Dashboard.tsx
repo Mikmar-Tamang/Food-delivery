@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 // import { Basket } from "../../types/baseket";
-import { User, Partner } from "../../types/user.ts";
-import { getAllUsers, banUser, getAllPartners, banPartner, approvePartner, rejectPartner} from "../../services/admin.service.ts";
+import { User, Partner } from "../../../types/user.ts";
+import { getAllUsers, banUser, getAllPartners, banPartner, approvePartner, rejectPartner} from "../../../services/admin.service.ts";
 import Basket from "./Basket.tsx";
 import UserOrders from "./UserOrders.tsx";
 
@@ -128,23 +128,6 @@ const handleBan = async (id: string) => {
       console.log(err);
     }
   };
-
-//   useEffect(() => {
-//   const fetchBasket = async () => {
-//     try {
-//       const res = await axios.get(
-//         import.meta.env.VITE_API_URL + "/api/cart",
-//         { withCredentials: true }
-//       );
-
-//       setBasket(res.data.basket);
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   };
-
-//   fetchBasket();
-// }, []);
 
 const menuItems = {
   USER: ["profile", "orders", "basket"],
